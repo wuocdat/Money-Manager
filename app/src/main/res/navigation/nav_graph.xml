@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/menu_home">
+    <fragment
+        android:id="@+id/menu_home"
+        android:name="com.wuocdat.moneymanager.View.Fragment.OverviewFragment"
+        android:label="fragment_overview"
+        tools:layout="@layout/fragment_overview" >
+        <action
+            android:id="@+id/action_overviewFragment2_to_processFragment2"
+            app:destination="@id/menu_process" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_process"
+        android:name="com.wuocdat.moneymanager.View.Fragment.ProcessFragment"
+        android:label="fragment_proccess"
+        tools:layout="@layout/fragment_proccess" >
+        <action
+            android:id="@+id/action_processFragment2_to_overviewFragment2"
+            app:destination="@id/menu_home" />
+    </fragment>
+</navigation>
