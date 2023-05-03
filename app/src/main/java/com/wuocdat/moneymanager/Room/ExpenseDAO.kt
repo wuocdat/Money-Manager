@@ -63,6 +63,16 @@ interface ExpenseDAO {
     )
     fun getTotalAmountByMonthInSpecialYear(yearString: String): LiveData<List<TotalAmountByMonth>>
 
+    @Query(
+        """
+        SELECT strftime('%m', datetime(createdTime/1000, 'unixepoch', 'localtime')) AS month, 
+        strftime('%Y', datetime(createdTime/1000, 'unixepoch', 'localtime')) AS year, SUM(money) as totalAmount
+        FROM expense_table
+        WHERE strftime('%Y-%m', datetime(createdTime/1000, 'unixepoch', 'localtime')) = :monthAndYearStr
+        """
+    )
+    suspend fun getTotalAmountByMonthAndYear(monthAndYearStr: String): TotalAmountByMonth
+
     @Query("SELECT * FROM expense_table WHERE createdTime >= :startTime AND createdTime <= :endTime")
     fun getExpensesByDateRange(startTime: Long, endTime: Long): LiveData<List<Expense>>
 

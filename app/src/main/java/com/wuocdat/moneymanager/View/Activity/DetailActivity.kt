@@ -113,15 +113,13 @@ class DetailActivity : AppCompatActivity() {
                 ) { pos: Int ->
 //                        adapter.notifyItemChanged(pos)
                     val currentExpense = expenseAdapter.getExpense(pos)
-                    val currentMonth = TimeUtils.getCurrentMonth().toInt()
-                    val currentYear = TimeUtils.getCurrentYear().toInt()
                     expenseViewModel.delete(currentExpense)
                         .invokeOnCompletion { cause: Throwable? ->
                             if (cause == null) {
-                                goalViewModel.updateAmountByMonthAndYear(
-                                    -currentExpense.money,
-                                    currentMonth,
-                                    currentYear
+                                goalViewModel.updateGoalByMonthAndYear(
+                                    TimeUtils.timeFormat(currentExpense.createdTime, "MM").toInt(),
+                                    TimeUtils.timeFormat(currentExpense.createdTime, "yyyy")
+                                        .toInt(),
                                 )
                             }
                         }

@@ -60,6 +60,11 @@ class ExpenseRepository(private val expenseDAO: ExpenseDAO) {
     }
 
     @WorkerThread
+    suspend fun getTotalAmountOfMonth(monthAndYearStr: String): TotalAmountByMonth {
+        return expenseDAO.getTotalAmountByMonthAndYear(monthAndYearStr);
+    }
+
+    @WorkerThread
     fun getExpensesByDateRange(startTime: Long, endTime: Long): LiveData<List<Expense>> {
         return expenseDAO.getExpensesByDateRange(startTime, endTime)
     }

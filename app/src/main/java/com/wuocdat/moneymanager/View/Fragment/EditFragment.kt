@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.wuocdat.moneymanager.Model.Expense
 import com.wuocdat.moneymanager.MoneyManagerApplication
+import com.wuocdat.moneymanager.Services.Database
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
@@ -78,7 +79,14 @@ class EditFragment : Fragment() {
                     Expense(newTitle, newDescription, newDate, newAmount, currentCategory)
                 dedicateExpense.id = currentId
 
-                expenseViewModel.update(dedicateExpense)
+                expenseViewModel.update(dedicateExpense).invokeOnCompletion { cause: Throwable? ->
+                    if (cause == null) {
+                        val month = TimeUtils.timeFormat(dateString, "dd/MM/yyyy", "MM").toInt()
+                        val year = TimeUtils.timeFormat(dateString, "dd/MM/yyyy", "yyyy").toInt()
+                        Database.getGoalViewModel(requireActivity(), requireActivity().application)
+                            .updateGoalByMonthAndYear(month, year)
+                    }
+                }
 
                 Toast.makeText(
                     requireContext().applicationContext,

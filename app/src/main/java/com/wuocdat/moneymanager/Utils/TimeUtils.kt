@@ -15,11 +15,15 @@ class TimeUtils {
             return dateFormat.format(date)
         }
 
-        fun timeFormat(monthYearStr: String, pattern: String = "MMMM yyyy"): String {
-            val inputFormatter = SimpleDateFormat("yyyy-M", Locale.getDefault())
-            val outputFormatter = SimpleDateFormat(pattern, Locale.getDefault())
+        fun timeFormat(
+            timeString: String,
+            inputPattern: String = "yyyy-M",
+            outputPattern: String = "MMMM yyyy"
+        ): String {
+            val inputFormatter = SimpleDateFormat(inputPattern, Locale.getDefault())
+            val outputFormatter = SimpleDateFormat(outputPattern, Locale.getDefault())
 
-            val date = inputFormatter.parse(monthYearStr)
+            val date = inputFormatter.parse(timeString)
             return date?.let { outputFormatter.format(it) } ?: ""
         }
 
@@ -57,6 +61,9 @@ class TimeUtils {
         }
 
         fun getMonthAndYearStr(): String = "${getCurrentYear()}-${getCurrentMonth()}"
+
+        fun getMonthAndYearStr(month: Int, year: Int): String =
+            "$year-${String.format("%02d", month)}"
 
         fun textToTimestamp(text: String): Long {
             val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

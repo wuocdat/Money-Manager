@@ -53,7 +53,10 @@ class NewExpenseActivity : AppCompatActivity(), NumberKeyboardListener, OnItemSe
         expenseViewModel =
             ViewModelProvider(this, viewModelFactory).get(ExpenseViewModel::class.java)
         val goalViewModelFactory =
-            GoalViewModelFactory((application as MoneyManagerApplication).goalRepository)
+            GoalViewModelFactory(
+                (application as MoneyManagerApplication).goalRepository,
+                (application as MoneyManagerApplication).repository
+            )
         goalViewModel =
             ViewModelProvider(this, goalViewModelFactory).get(GoalViewModel::class.java)
 
@@ -111,7 +114,7 @@ class NewExpenseActivity : AppCompatActivity(), NumberKeyboardListener, OnItemSe
             val currentYear = TimeUtils.getCurrentYear().toInt()
             expenseViewModel.insert(expense).invokeOnCompletion { cause: Throwable? ->
                 if (cause == null) {
-                    goalViewModel.updateAmountByMonthAndYear(amount, currentMonth, currentYear)
+                    goalViewModel.updateGoalByMonthAndYear( currentMonth, currentYear)
                 }
             }
             finish()

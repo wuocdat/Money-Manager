@@ -61,7 +61,10 @@ class MainActivity : AppCompatActivity() {
 
         //check whether current month goal available or not
         val viewModelFactory =
-            GoalViewModelFactory((application as MoneyManagerApplication).goalRepository)
+            GoalViewModelFactory(
+                (application as MoneyManagerApplication).goalRepository,
+                (application as MoneyManagerApplication).repository
+            )
         goalViewModel =
             ViewModelProvider(this, viewModelFactory).get(GoalViewModel::class.java)
 

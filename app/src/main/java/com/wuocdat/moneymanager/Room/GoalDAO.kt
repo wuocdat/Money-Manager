@@ -23,6 +23,6 @@ interface GoalDAO {
     @Query("SELECT * FROM goal_table WHERE month = :month AND year = :year LIMIT 1")
     fun getGoalByMonthAndYear(month: Int, year: Int): LiveData<Goal>
 
-    @Query("UPDATE goal_table SET currentAmount = currentAmount + :amount WHERE month = :month AND year = :year")
+    @Query("UPDATE goal_table SET currentAmount = :amount WHERE month = :month AND year = :year")
     suspend fun updateAmountByMonthAndYear(amount: Long, month: Int, year: Int)
 }

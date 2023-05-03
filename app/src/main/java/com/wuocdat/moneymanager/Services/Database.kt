@@ -13,11 +13,17 @@ class Database {
     companion object {
         fun getGoalViewModel(owner: ViewModelStoreOwner, application: Application): GoalViewModel {
             val goalViewModelFactory =
-                GoalViewModelFactory((application as MoneyManagerApplication).goalRepository)
+                GoalViewModelFactory(
+                    (application as MoneyManagerApplication).goalRepository,
+                    application.repository
+                )
             return ViewModelProvider(owner, goalViewModelFactory).get(GoalViewModel::class.java);
         }
 
-        fun getExpenseViewModel(owner: ViewModelStoreOwner, application: Application): ExpenseViewModel {
+        fun getExpenseViewModel(
+            owner: ViewModelStoreOwner,
+            application: Application
+        ): ExpenseViewModel {
             val viewModelFactory =
                 ExpenseViewModelFactory((application as MoneyManagerApplication).repository)
             return ViewModelProvider(owner, viewModelFactory).get(ExpenseViewModel::class.java);
