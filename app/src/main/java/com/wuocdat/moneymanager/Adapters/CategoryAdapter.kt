@@ -17,7 +17,7 @@ import com.wuocdat.roomdatabase.R
 class CategoryAdapter(
     private val listData: List<CategoryItem>,
     val context: Context,
-    val selectable: Boolean,
+    private val selectable: Boolean,
     private val listener: OnItemSelectedListener
 ) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
