@@ -65,7 +65,7 @@ class DetailActivity : AppCompatActivity() {
 
         //config recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-        expenseAdapter = ExpenseAdapter()
+        expenseAdapter = ExpenseAdapter(this)
         recyclerView.adapter = expenseAdapter
 
         setTextToPickerTextView()
