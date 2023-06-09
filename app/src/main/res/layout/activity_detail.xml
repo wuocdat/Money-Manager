@@ -8,10 +8,19 @@
     android:padding="8dp"
     tools:context="com.wuocdat.moneymanager.View.Activity.DetailActivity">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="8dp"
+        android:background="@drawable/bottom_border"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -47,5 +56,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/detail_activity_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="8dp"/>
 </LinearLayout>

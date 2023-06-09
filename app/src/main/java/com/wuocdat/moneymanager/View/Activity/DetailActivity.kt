@@ -1,10 +1,8 @@
 package com.wuocdat.moneymanager.View.Activity
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -18,7 +16,6 @@ import com.wuocdat.moneymanager.Adapters.ExpenseAdapter
 import com.wuocdat.moneymanager.Helper.SwipeHelper
 import com.wuocdat.moneymanager.MoneyManagerApplication
 import com.wuocdat.moneymanager.Services.Database
-import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
@@ -181,6 +178,7 @@ class DetailActivity : AppCompatActivity() {
             )
         )
     }
+
 }
 
 

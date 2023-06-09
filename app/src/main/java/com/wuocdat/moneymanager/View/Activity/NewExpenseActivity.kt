@@ -1,51 +1,53 @@
 package com.wuocdat.moneymanager.View.Activity
 
-import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.TextView
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.davidmiguel.numberkeyboard.NumberKeyboard
-import com.davidmiguel.numberkeyboard.NumberKeyboardListener
-import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
+import com.google.android.material.timepicker.TimeFormat
 import com.wuocdat.moneymanager.Adapters.CategoryAdapter
 import com.wuocdat.moneymanager.Interfaces.OnItemSelectedListener
 import com.wuocdat.moneymanager.Model.Expense
 import com.wuocdat.moneymanager.MoneyManagerApplication
+import com.wuocdat.moneymanager.Services.Database
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModelFactory
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.moneymanager.ViewModel.GoalViewModelFactory
-import com.wuocdat.roomdatabase.R
+import com.wuocdat.roomdatabase.databinding.ActivityNewExpenseBinding
+import java.util.Calendar
 
-class NewExpenseActivity : AppCompatActivity(), NumberKeyboardListener, OnItemSelectedListener {
+class NewExpenseActivity : AppCompatActivity(), OnItemSelectedListener {
 
-    private lateinit var textView: TextView
-    private lateinit var numberKeyboard: NumberKeyboard
-    private lateinit var recyclerView: RecyclerView
+    lateinit var binding: ActivityNewExpenseBinding
+
     lateinit var adapter: CategoryAdapter
-    private lateinit var editIcon: ImageView
-    private lateinit var title: TextView
 
-    private var amount: Long = 0L
     var position: Int = -1
-    var titleString = "New expense"
+
+    private val calendar = Calendar.getInstance()
+    private var year = calendar.get(Calendar.YEAR)
+    private var month = calendar.get(Calendar.MONTH) + 1
+    private var day = calendar.get(Calendar.DAY_OF_MONTH)
+    private var hour = calendar.get(Calendar.HOUR_OF_DAY)
+    private var minute = calendar.get(Calendar.MINUTE)
 
     private lateinit var expenseViewModel: ExpenseViewModel
     private lateinit var goalViewModel: GoalViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_expense)
+
+        //set view
+        binding = ActivityNewExpenseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //view model
         val viewModelFactory =
@@ -60,95 +62,104 @@ class NewExpenseActivity : AppCompatActivity(), NumberKeyboardListener, OnItemSe
         goalViewModel =
             ViewModelProvider(this, goalViewModelFactory).get(GoalViewModel::class.java)
 
-        //findId
-        textView = findViewById(R.id.new_expense_textView)
-        numberKeyboard = findViewById(R.id.new_expense_numberKeyboard)
-        recyclerView = findViewById(R.id.new_expense_recyclerView)
-        editIcon = findViewById(R.id.new_expense_edit_icon)
-        title = findViewById(R.id.new_expense_title)
-
-        //dialog
-        editIcon.setOnClickListener {
-            setDialog()
-        }
-
-        numberKeyboard.setLeftAuxButtonIcon(R.drawable.ic_playlist_add)
-
-        recyclerView.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        binding.newExpenseRC.layoutManager =
+            GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
 
         adapter = CategoryAdapter(StringUtils.categories, this, true, this)
-        recyclerView.adapter = adapter
+        binding.newExpenseRC.adapter = adapter
 
-        numberKeyboard.setListener(this)
+        resetDateTV()
 
-    }
+        binding.chooseDateButton.setOnClickListener {
 
-    private fun setDialog() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        builder.setTitle("Enter expense title")
-        val dialogLayout = inflater.inflate(R.layout.alert_dialog_with_edittext, null)
-        val editText: TextInputEditText = dialogLayout.findViewById(R.id.alert_dialog_editText)
-        builder.setView(dialogLayout)
-        builder.setPositiveButton("OK") { dialogInterface, i ->
-            if (editText.text.toString().isNotEmpty()) {
-                titleString = editText.text.toString()
-                title.text = StringUtils.capFirstCharacter(titleString)
-            }
-        }
-        builder.show()
-    }
-
-    override fun onLeftAuxButtonClicked() {
-
-        if (amount != 0L && position != -1) {
-            val expense = Expense(
-                titleString,
-                "todo",
-                System.currentTimeMillis(),
-                amount,
-                StringUtils.categories[position].categoryName
+            val datePickerDialog = DatePickerDialog(
+                this,
+                { _, selectedYear, monthOfYear, dayOfMonth ->
+                    year = selectedYear
+                    month = monthOfYear + 1
+                    day = dayOfMonth
+                    resetDateTV()
+                },
+                year,
+                month,
+                day
             )
+            datePickerDialog.show()
+        }
 
-            val currentMonth = TimeUtils.getCurrentMonth().toInt()
-            val currentYear = TimeUtils.getCurrentYear().toInt()
-            expenseViewModel.insert(expense).invokeOnCompletion { cause: Throwable? ->
-                if (cause == null) {
-                    goalViewModel.updateGoalByMonthAndYear( currentMonth, currentYear)
-                }
+        binding.chooseTimeButton.setOnClickListener {
+            val picker =
+                MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(hour)
+                    .setMinute(minute)
+                    .setTitleText("Select Appointment time")
+                    .setInputMode(INPUT_MODE_KEYBOARD)
+                    .build()
+            picker.addOnPositiveButtonClickListener {
+                hour = picker.hour
+                minute = picker.minute
+                resetDateTV()
             }
+            picker.show(supportFragmentManager, "tag")
+        }
+
+        binding.cancelButton.setOnClickListener {
             finish()
-        } else
-            Toast.makeText(
-                applicationContext,
-                "Please fill out the information completely!",
-                Toast.LENGTH_LONG
-            )
-                .show()
-    }
-
-    override fun onNumberClicked(number: Int) {
-        amount = if (amount == 0L) {
-            number.toLong()
-        } else {
-            (amount.toString() + number.toString()).toLong()
         }
-        textView.text = StringUtils.convertToCurrencyFormat(amount)
 
-    }
+        binding.saveButton.setOnClickListener {
+            val nameTrans = binding.nameTransaction.text.toString()
+            val transDescription = binding.descriptionTrans.text.toString()
+            val transAmount = binding.AmountTrans.text.toString()
 
-    override fun onRightAuxButtonClicked() {
-        amount = if (amount < 10L) {
-            0L
-        } else {
-            val numberString = amount.toString()
-            numberString.substring(0, numberString.length - 1).toLong()
+            calendar.set(year, month - 1, day, hour, minute)
+            val createdTime = calendar.timeInMillis
+
+            if (nameTrans.isNotEmpty() && position != -1 && transAmount.isNotEmpty()) {
+                val newExpense = Expense(
+                    nameTrans,
+                    transDescription,
+                    createdTime,
+                    transAmount.toLong(),
+                    StringUtils.categories[position].categoryName
+                )
+                expenseViewModel.insert(newExpense).invokeOnCompletion { cause ->
+                    if (cause == null) {
+                        Database.getGoalViewModel(this, application)
+                            .updateGoalByMonthAndYear(month, year)
+                    }
+                }
+
+                Toast.makeText(
+                    applicationContext,
+                    "Successfully created new expense!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            } else
+                Toast.makeText(
+                    applicationContext,
+                    "Please check the information again!",
+                    Toast.LENGTH_SHORT
+                ).show()
         }
-        textView.text = StringUtils.convertToCurrencyFormat(amount)
+
     }
+
 
     override fun onItemSelected(position: Int) {
         this.position = position
+    }
+
+    private fun resetDateTV() {
+        binding.dateTV.text =
+            "$hour:${String.format("%02d", minute)} ${
+                String.format(
+                    "%02d",
+                    day
+                )
+            }/${String.format("%02d", month)}/$year"
     }
 
 }

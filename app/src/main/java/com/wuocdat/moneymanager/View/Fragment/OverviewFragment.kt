@@ -1,6 +1,7 @@
 package com.wuocdat.moneymanager.View.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.roomdatabase.R
+import kotlin.math.log
 
 class OverviewFragment : Fragment() {
 
@@ -69,6 +71,7 @@ class OverviewFragment : Fragment() {
         goalVM.getGoalByMonthAndYear(currentMonth, currentYear)
             .observe(requireActivity(), Observer { goal ->
                 if (goal !== null) {
+                    Log.d("total", goal.currentAmount.toString())
                     totalMoneyTextView.text =
                         StringUtils.convertToCurrencyFormat(goal.currentAmount)
                     progress.progress =

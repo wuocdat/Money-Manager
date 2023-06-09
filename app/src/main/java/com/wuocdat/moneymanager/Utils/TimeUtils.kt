@@ -65,8 +65,8 @@ class TimeUtils {
         fun getMonthAndYearStr(month: Int, year: Int): String =
             "$year-${String.format("%02d", month)}"
 
-        fun textToTimestamp(text: String): Long {
-            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        fun textToTimestamp(text: String, pattern: String = "dd/MM/yyyy"): Long {
+            val format = SimpleDateFormat(pattern, Locale.getDefault())
             val date = format.parse(text)
             return date?.time ?: 0L
         }

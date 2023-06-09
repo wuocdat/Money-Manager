@@ -5,6 +5,11 @@ plugins {
 }
 
 android {
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     namespace 'com.wuocdat.roomdatabase'
     compileSdk 33
 
@@ -72,6 +77,9 @@ dependencies {
 
     //chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //date range piker
+    implementation "com.andrewjapar.rangedatepicker:rangedatepicker:$rootProject.rangedatepicker"
 
     // Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
