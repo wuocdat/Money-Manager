@@ -17,7 +17,7 @@ class Database {
                     (application as MoneyManagerApplication).goalRepository,
                     application.repository
                 )
-            return ViewModelProvider(owner, goalViewModelFactory).get(GoalViewModel::class.java);
+            return ViewModelProvider(owner, goalViewModelFactory).get(GoalViewModel::class.java)
         }
 
         fun getExpenseViewModel(

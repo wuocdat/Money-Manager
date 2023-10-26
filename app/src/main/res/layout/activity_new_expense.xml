@@ -7,18 +7,17 @@
     android:orientation="vertical"
     tools:context="com.wuocdat.moneymanager.View.Activity.NewExpenseActivity">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:padding="16dp"
             android:orientation="vertical" >
-
 
             <TextView
                 android:id="@+id/textView10"

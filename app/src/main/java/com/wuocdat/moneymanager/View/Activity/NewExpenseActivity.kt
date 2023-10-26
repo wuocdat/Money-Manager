@@ -1,8 +1,12 @@
 package com.wuocdat.moneymanager.View.Activity
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -16,13 +20,13 @@ import com.wuocdat.moneymanager.Model.Expense
 import com.wuocdat.moneymanager.MoneyManagerApplication
 import com.wuocdat.moneymanager.Services.Database
 import com.wuocdat.moneymanager.Utils.StringUtils
-import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModelFactory
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.moneymanager.ViewModel.GoalViewModelFactory
 import com.wuocdat.roomdatabase.databinding.ActivityNewExpenseBinding
 import java.util.Calendar
+
 
 class NewExpenseActivity : AppCompatActivity(), OnItemSelectedListener {
 
@@ -48,6 +52,9 @@ class NewExpenseActivity : AppCompatActivity(), OnItemSelectedListener {
         //set view
         binding = ActivityNewExpenseBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //hide keyboard when focus outside of editText
+        hideSoftKeyboard();
 
         //view model
         val viewModelFactory =
@@ -160,6 +167,16 @@ class NewExpenseActivity : AppCompatActivity(), OnItemSelectedListener {
                     day
                 )
             }/${String.format("%02d", month)}/$year"
+    }
+
+    private fun hideSoftKeyboard() {
+        binding.linearLayout.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+            }
+            false
+        }
     }
 
 }
