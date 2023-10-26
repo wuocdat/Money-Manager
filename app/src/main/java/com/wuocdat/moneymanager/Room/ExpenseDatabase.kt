@@ -29,7 +29,7 @@ abstract class ExpenseDatabase : RoomDatabase() {
                     "expense_table"
                 )
                     .fallbackToDestructiveMigration()
-                    .addCallback(ExpenseDatabaseCallback(scope))
+//                    .addCallback(ExpenseDatabaseCallback(scope))
                     .build()
 
                 INSTANCE = instance
