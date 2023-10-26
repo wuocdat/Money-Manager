@@ -3,11 +3,13 @@ package com.wuocdat.moneymanager.View.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.util.Pair
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var dateRangeTextView: TextView
     private lateinit var menu: AutoCompleteTextView
     private lateinit var recyclerView: RecyclerView
+    private lateinit var endDateTV: TextView
 
     private var selectedCategory: String = "all"
 
@@ -59,6 +62,7 @@ class DetailActivity : AppCompatActivity() {
         dateRangeTextView = findViewById(R.id.detail_activity_date_range_textView)
         menu = findViewById(R.id.detail_activity_menu)
         recyclerView = findViewById(R.id.detail_activity_recyclerView)
+        endDateTV = findViewById(R.id.detail_activity_end_date_textView)
 
         //config recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -85,9 +89,9 @@ class DetailActivity : AppCompatActivity() {
 
         //get expenses
         expenseViewModel.getExpensesByCreatedTimeAndCategory(startTime, endTime, selectedCategory)
-            .observe(this, Observer { expenses ->
+            .observe(this) { expenses ->
                 expenseAdapter.setExpense(expenses)
-            })
+            }
 
 
         //swipe
@@ -169,14 +173,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setTextToPickerTextView() {
-        dateRangeTextView.text = getString(
-            R.string.date_range,
-            TimeUtils.timeFormat(startTime, "dd-MM-yyyy"),
-            TimeUtils.timeFormat(
-                endTime,
-                "dd-MM-yyyy"
-            )
-        )
+        dateRangeTextView.text = TimeUtils.timeFormat(startTime, "dd-MM-yyyy")
+        endDateTV.text = TimeUtils.timeFormat(endTime, "dd-MM-yyyy")
     }
 
 }
