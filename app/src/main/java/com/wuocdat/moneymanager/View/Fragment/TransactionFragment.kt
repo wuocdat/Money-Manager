@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wuocdat.moneymanager.Adapters.CategoryAdapter
 import com.wuocdat.moneymanager.Adapters.StatisticAdapter
+import com.wuocdat.moneymanager.Data.StatisticInterface
 import com.wuocdat.moneymanager.Interfaces.OnItemSelectedListener
 import com.wuocdat.moneymanager.Services.Database
 import com.wuocdat.moneymanager.Utils.StringUtils
@@ -18,7 +19,7 @@ import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.View.Activity.DetailActivity
 import com.wuocdat.roomdatabase.R
 
-class TransactionFragment : Fragment(), OnItemSelectedListener {
+class TransactionFragment : Fragment(), OnItemSelectedListener, StatisticInterface {
 
     lateinit var categoryRView: RecyclerView
     lateinit var statisticRecyclerView: RecyclerView
@@ -46,7 +47,7 @@ class TransactionFragment : Fragment(), OnItemSelectedListener {
         // setup statistic recyclerview
         statisticRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val statisticAdapter = StatisticAdapter(requireActivity())
+        val statisticAdapter = StatisticAdapter(requireActivity(), this)
         statisticRecyclerView.adapter = statisticAdapter
 
         // fetch category statistic and add data to recyclerview
@@ -60,6 +61,12 @@ class TransactionFragment : Fragment(), OnItemSelectedListener {
     override fun onItemSelected(position: Int) {
         val intent = Intent(requireContext(), DetailActivity::class.java)
         intent.putExtra("category", StringUtils.categories[position].categoryName)
+        startActivity(intent)
+    }
+
+    override fun onClickItem(categoryName: String) {
+        val intent = Intent(requireContext(), DetailActivity::class.java)
+        intent.putExtra("category", categoryName)
         startActivity(intent)
     }
 }

@@ -1,19 +1,23 @@
 package com.wuocdat.moneymanager.Adapters
 
 import android.app.Activity
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.wuocdat.moneymanager.Data.CategoryStatistic
+import com.wuocdat.moneymanager.Data.StatisticInterface
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.roomdatabase.R
 
-class StatisticAdapter(val activity: Activity) :
+class StatisticAdapter(
+    val activity: Activity,
+    private val listener: StatisticInterface
+) :
     RecyclerView.Adapter<StatisticAdapter.StatisticViewHolder>() {
 
     private var statistics: List<CategoryStatistic> = ArrayList()
@@ -27,6 +31,7 @@ class StatisticAdapter(val activity: Activity) :
         val amountTV: TextView = itemView.findViewById(R.id.category_progress_item_amount)
         val numberTransactionTV: TextView =
             itemView.findViewById(R.id.category_progress_item_number_transaction)
+        val mainLayout: ConstraintLayout = itemView.findViewById(R.id.category_progress_item_main_layout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatisticViewHolder {
@@ -47,9 +52,19 @@ class StatisticAdapter(val activity: Activity) :
 
         val itemColorRes = getItemColor(currentStatistic.category)
         if (itemColorRes !== null) {
-            holder.categoryIcon.setColorFilter(activity.resources.getColor(itemColorRes, activity.theme))
+            holder.categoryIcon.setColorFilter(
+                activity.resources.getColor(
+                    itemColorRes,
+                    activity.theme
+                )
+            )
             holder.percentTV.setTextColor(activity.resources.getColor(itemColorRes, activity.theme))
-            holder.progress.setIndicatorColor(activity.resources.getColor(itemColorRes, activity.theme))
+            holder.progress.setIndicatorColor(
+                activity.resources.getColor(
+                    itemColorRes,
+                    activity.theme
+                )
+            )
         }
 
         holder.titleTV.text = currentStatistic.category
@@ -58,6 +73,9 @@ class StatisticAdapter(val activity: Activity) :
         holder.numberTransactionTV.text =
             if (numberTransaction > 1) "$numberTransaction Transactions"
             else "$numberTransaction Transaction"
+        holder.mainLayout.setOnClickListener {
+            listener.onClickItem(currentStatistic.category)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -76,6 +94,4 @@ class StatisticAdapter(val activity: Activity) :
     private fun getResImg(category: String): Int? {
         return StringUtils.categories.find { item -> item.categoryName == category }?.imageResId
     }
-
-
 }
