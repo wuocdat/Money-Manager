@@ -5,17 +5,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.wuocdat.moneymanager.Data.TotalAmountByMonth
@@ -26,21 +31,20 @@ import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModelFactory
 import com.wuocdat.roomdatabase.R
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Calendar
 
 
 class ProcessFragment : Fragment() {
 
-    private lateinit var monthTextView: TextView
-    private lateinit var yearTextView: TextView
+    private lateinit var monthBtn: Button
+    private lateinit var yearBtn: Button
 
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
-    lateinit var expenseViewModel: ExpenseViewModel
+    private lateinit var expenseViewModel: ExpenseViewModel
 
-    var selectedMonth = TimeUtils.getCurrentMonth()
-    var selectedYear = TimeUtils.getCurrentYear()
+    private var selectedMonth = TimeUtils.getCurrentMonth()
+    private var selectedYear = TimeUtils.getCurrentYear()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,25 +63,26 @@ class ProcessFragment : Fragment() {
 
         pieChart = view.findViewById(R.id.pieChart)
         barChart = view.findViewById(R.id.barChart)
-        monthTextView = view.findViewById(R.id.proccess_fragment_month_textView)
-        yearTextView = view.findViewById(R.id.proccess_fragment_year_textView)
+        monthBtn = view.findViewById(R.id.proccess_month_btn)
+        yearBtn = view.findViewById(R.id.proccess_year_btn)
 
-        monthTextView.text = selectedMonth
-        yearTextView.text = selectedYear
+        monthBtn.text = selectedMonth
+        yearBtn.text = selectedYear
 
-        monthTextView.setOnClickListener { showMonthPickerDialog() }
-        yearTextView.setOnClickListener { showYearPickerDialog() }
+        monthBtn.setOnClickListener { showMonthPickerDialog() }
+        yearBtn.setOnClickListener { showYearPickerDialog() }
 
         //pieChart
         val l: Legend = pieChart.legend
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        pieChart.centerText = "This Month"
         pieChart.description.text = "Amount spent this month"
         pieChart.setCenterTextColor(R.color.primary_color)
         expenseViewModel.getExpensesOfXMonth("$selectedYear-$selectedMonth")
-            .observe(requireActivity(), Observer { expenses ->
+            .observe(requireActivity()) { expenses ->
+                pieChart.centerText =
+                    if (expenses.isEmpty()) "You don't have any data yet this month!" else "This Month"
                 setDataToPieChart(expenses)
-            })
+            }
 
         //barChart
         val yAxisLeft: YAxis = barChart.getAxis(YAxis.AxisDependency.LEFT)
@@ -94,9 +99,9 @@ class ProcessFragment : Fragment() {
         barChart.setDrawBorders(true)
 
         expenseViewModel.getTotalAmountByMonthInSpecialYear(selectedYear)
-            .observe(requireActivity(), Observer { totalAmounts ->
+            .observe(requireActivity()) { totalAmounts ->
                 setDataToBarChart(totalAmounts)
-            })
+            }
 
     }
 
@@ -162,7 +167,7 @@ class ProcessFragment : Fragment() {
             .setPositiveButton("OK") { _, _ ->
                 val year = yearPicker.value
                 selectedYear = year.toString()
-                yearTextView.text = selectedYear
+                yearBtn.text = selectedYear
                 expenseViewModel.setYearString(selectedYear)
 
                 val formattedMonth = "$selectedYear-$selectedMonth"
@@ -191,7 +196,7 @@ class ProcessFragment : Fragment() {
                 val month = monthPicker.value
                 selectedMonth = String.format("%02d", month)
                 val formattedMonth = "$selectedYear-$selectedMonth"
-                monthTextView.text = selectedMonth
+                monthBtn.text = selectedMonth
                 expenseViewModel.setMonthAndYearString(formattedMonth)
             }
             .setNegativeButton("Cancel") { dialog, _ ->
