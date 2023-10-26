@@ -5,6 +5,15 @@
     android:orientation="vertical"
     tools:context="com.wuocdat.moneymanager.View.Fragment.TransactionFragment" >
 
+    <TextView
+        android:id="@+id/frag_transaction_empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="@string/empty_statistic"
+        android:textStyle="italic" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transaction_fragment_category_recycler_view"
         android:layout_width="match_parent"

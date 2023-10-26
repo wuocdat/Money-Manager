@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wuocdat.moneymanager.Adapters.CategoryAdapter
@@ -23,6 +23,7 @@ class TransactionFragment : Fragment(), OnItemSelectedListener, StatisticInterfa
 
     lateinit var categoryRView: RecyclerView
     lateinit var statisticRecyclerView: RecyclerView
+    private lateinit var emptyText: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +38,7 @@ class TransactionFragment : Fragment(), OnItemSelectedListener, StatisticInterfa
         // find views
         categoryRView = view.findViewById(R.id.transaction_fragment_category_recycler_view)
         statisticRecyclerView = view.findViewById(R.id.transaction_fragment_statistic_rv)
+        emptyText = view.findViewById(R.id.frag_transaction_empty_text)
 
         // set category recyclerview
         val categoryAdapter = CategoryAdapter(StringUtils.categories, requireContext(), false, this)
@@ -53,9 +55,12 @@ class TransactionFragment : Fragment(), OnItemSelectedListener, StatisticInterfa
         // fetch category statistic and add data to recyclerview
         Database.getExpenseViewModel(this, requireActivity().application)
             .getCategoryStatisticByMonthAndYear(TimeUtils.getMonthAndYearStr())
-            .observe(requireActivity(), Observer { statistics ->
+            .observe(requireActivity()) { statistics ->
+                if (statistics.isEmpty()) {
+                    emptyText.visibility = View.VISIBLE
+                } else emptyText.visibility = View.GONE
                 statisticAdapter.setStatistic(statistics)
-            })
+            }
     }
 
     override fun onItemSelected(position: Int) {

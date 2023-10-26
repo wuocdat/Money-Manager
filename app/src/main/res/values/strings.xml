@@ -8,4 +8,5 @@
     <string name="all_categories">All Categories</string>
     <string name="preference_file_key">money_manager_001</string>
     <string name="welcome_text">Welcome to money manager!</string>
+    <string name="empty_statistic">You don\'t have any records yet</string>
 </resources>
