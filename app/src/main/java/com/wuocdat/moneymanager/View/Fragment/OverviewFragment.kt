@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.tabs.TabLayout
@@ -18,17 +18,17 @@ import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.roomdatabase.R
-import kotlin.math.log
 
 class OverviewFragment : Fragment() {
 
-    lateinit var totalMoneyTextView: TextView
-    lateinit var progress: LinearProgressIndicator
-    lateinit var currentDateView: TextView
-    lateinit var viewPager2: ViewPager2
-    lateinit var tabLayout: TabLayout
+    private lateinit var totalMoneyTextView: TextView
+    private lateinit var progress: LinearProgressIndicator
+    private lateinit var currentDateView: TextView
+    private lateinit var viewPager2: ViewPager2
+    private lateinit var tabLayout: TabLayout
+    private lateinit var watchLayout: LinearLayout
 
-    lateinit var goalVM: GoalViewModel
+    private lateinit var goalVM: GoalViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +46,7 @@ class OverviewFragment : Fragment() {
         currentDateView = view.findViewById(R.id.overview_fragment_current_date)
         viewPager2 = view.findViewById(R.id.overview_fragment_view_pager)
         tabLayout = view.findViewById(R.id.overview_fragment_tab_layout)
+        watchLayout = view.findViewById(R.id.frag_watch_goals_layout)
 
         //set view models
         goalVM = Database.getGoalViewModel(this, requireActivity().application)
@@ -65,11 +66,17 @@ class OverviewFragment : Fragment() {
         //set text to view
         currentDateView.text = TimeUtils.timeFormat(System.currentTimeMillis(), "dd, MMMM yyyy")
 
+        //handle watch goals
+        watchLayout.setOnClickListener {
+            val goalTab = tabLayout.getTabAt(1)
+            goalTab?.select()
+        }
+
         //set goal progress
         val currentMonth = TimeUtils.getCurrentMonth().toInt()
         val currentYear = TimeUtils.getCurrentYear().toInt()
         goalVM.getGoalByMonthAndYear(currentMonth, currentYear)
-            .observe(requireActivity(), Observer { goal ->
+            .observe(requireActivity()) { goal ->
                 if (goal !== null) {
                     Log.d("total", goal.currentAmount.toString())
                     totalMoneyTextView.text =
@@ -79,7 +86,7 @@ class OverviewFragment : Fragment() {
                 } else {
                     progress.progress = 0
                 }
-            })
+            }
     }
 
 }

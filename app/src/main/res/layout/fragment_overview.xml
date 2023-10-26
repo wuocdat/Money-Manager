@@ -79,6 +79,7 @@
                     app:trackCornerRadius="8dp" />
 
                 <LinearLayout
+                    android:id="@+id/frag_watch_goals_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
