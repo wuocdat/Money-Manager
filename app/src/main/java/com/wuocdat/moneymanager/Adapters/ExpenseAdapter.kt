@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.wuocdat.moneymanager.Data.DetailInterface
 import com.wuocdat.moneymanager.Model.Expense
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.roomdatabase.R
 
-class ExpenseAdapter(private val activity: Activity) : RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
+class ExpenseAdapter(private val activity: Activity, private val detailI: DetailInterface) :
+    RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
 
     var expenses: List<Expense> = ArrayList()
 
@@ -23,7 +26,8 @@ class ExpenseAdapter(private val activity: Activity) : RecyclerView.Adapter<Expe
         val textViewCategory: TextView = itemView.findViewById(R.id.item_transation_category)
         val textViewMoney: TextView = itemView.findViewById(R.id.item_transation_money)
         val textViewTime: TextView = itemView.findViewById(R.id.item_transation_time)
-
+        val moreImg: ImageView = itemView.findViewById(R.id.item_transation_more_img)
+        val card: CardView = itemView.findViewById(R.id.item_transation_card)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpenseViewHolder {
@@ -53,8 +57,26 @@ class ExpenseAdapter(private val activity: Activity) : RecyclerView.Adapter<Expe
         }
 
         if (itemColorRes !== null && itemImgRes !== null) {
-            holder.textViewCategory.setTextColor(activity.resources.getColor(itemColorRes, activity.theme))
-            holder.imageCategory.setColorFilter(activity.resources.getColor(itemColorRes, activity.theme))
+            holder.textViewCategory.setTextColor(
+                activity.resources.getColor(
+                    itemColorRes,
+                    activity.theme
+                )
+            )
+            holder.imageCategory.setColorFilter(
+                activity.resources.getColor(
+                    itemColorRes,
+                    activity.theme
+                )
+            )
+        }
+
+        holder.moreImg.setOnClickListener {
+            detailI.onClickMoreItem(position)
+        }
+
+        holder.card.setOnClickListener{
+            detailI.onClickItem(position)
         }
 
     }

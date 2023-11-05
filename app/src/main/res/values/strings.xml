@@ -11,4 +11,6 @@
     <string name="empty_statistic">You don\'t have any records yet</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

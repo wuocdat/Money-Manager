@@ -1,15 +1,14 @@
 package com.wuocdat.moneymanager.View.Fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.wuocdat.moneymanager.Model.Expense
 import com.wuocdat.moneymanager.MoneyManagerApplication
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.Utils.TimeUtils
@@ -37,6 +36,9 @@ class ReceiptFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        val showEditScreen = requireActivity().intent.getBooleanExtra("edit_screen", false)
+        if (showEditScreen) moveToEditScreen(false)
+
         val viewModelFactory =
             ExpenseViewModelFactory((requireActivity().application as MoneyManagerApplication).repository)
         expenseViewModel =
@@ -50,11 +52,7 @@ class ReceiptFragment : Fragment() {
         moveToEditButton = view.findViewById(R.id.receipt_fragment_floatingActionButton)
 
         moveToEditButton.setOnClickListener {
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            val editFragment = EditFragment()
-            transaction.replace(R.id.expense_activity_fragment_container, editFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            moveToEditScreen(true)
         }
 
         val intent = requireActivity().intent
@@ -67,8 +65,16 @@ class ReceiptFragment : Fragment() {
 //            descriptionTextView.text = expense.description
             totalTextView.text = StringUtils.convertToCurrencyFormat(expense.money)
         })
+    }
 
-
+    private fun moveToEditScreen(withBackStack: Boolean) {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        val editFragment = EditFragment()
+        transaction.replace(R.id.expense_activity_fragment_container, editFragment)
+        if (withBackStack) {
+            transaction.addToBackStack(null)
+        }
+        transaction.commit()
     }
 
 }

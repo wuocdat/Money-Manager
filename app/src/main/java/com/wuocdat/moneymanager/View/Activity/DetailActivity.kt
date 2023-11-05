@@ -1,21 +1,23 @@
 package com.wuocdat.moneymanager.View.Activity
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.wuocdat.moneymanager.Adapters.ExpenseAdapter
-import com.wuocdat.moneymanager.Helper.SwipeHelper
+import com.wuocdat.moneymanager.Data.DetailInterface
 import com.wuocdat.moneymanager.MoneyManagerApplication
 import com.wuocdat.moneymanager.Services.Database
 import com.wuocdat.moneymanager.Utils.StringUtils
@@ -24,8 +26,11 @@ import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModelFactory
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.roomdatabase.R
+import com.wuocdat.roomdatabase.databinding.ActivityDetailBinding
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), DetailInterface {
+
+    private lateinit var binding: ActivityDetailBinding
 
     private lateinit var openCalendarButton: ImageView
     private lateinit var dateRangeTextView: TextView
@@ -34,21 +39,56 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var endDateTV: TextView
 
     private var selectedCategory: String = "all"
+    private var currentItemPos: Int = 0
 
     private var startTime: Long = MaterialDatePicker.thisMonthInUtcMilliseconds()
     private var endTime: Long = MaterialDatePicker.todayInUtcMilliseconds()
 
     private lateinit var expenseViewModel: ExpenseViewModel
     private lateinit var goalViewModel: GoalViewModel
+    private lateinit var dialog: BottomSheetDialog
 
     private lateinit var expenseAdapter: ExpenseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val defaultCategory = intent.getStringExtra("category")
         if (defaultCategory !== null) selectedCategory = defaultCategory
+
+
+        dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_dialog, null)
+        val closeImg: ImageView = view.findViewById(R.id.sheet_close_img)
+        val editLayout: LinearLayout = view.findViewById(R.id.sheet_edit_layout)
+        val deleteLayout: LinearLayout = view.findViewById(R.id.sheet_delete_layout)
+
+        closeImg.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setContentView(view)
+        editLayout.setOnClickListener {
+            val intent = Intent(this@DetailActivity, ExpenseActivity::class.java)
+            intent.putExtra("id", expenseAdapter.getExpense(currentItemPos).id)
+            intent.putExtra("edit_screen", true)
+            startActivity(intent)
+        }
+        deleteLayout.setOnClickListener {
+            val currentExpense = expenseAdapter.getExpense(currentItemPos)
+            expenseViewModel.delete(currentExpense)
+                .invokeOnCompletion { cause: Throwable? ->
+                    if (cause == null) {
+                        goalViewModel.updateGoalByMonthAndYear(
+                            TimeUtils.timeFormat(currentExpense.createdTime, "MM").toInt(),
+                            TimeUtils.timeFormat(currentExpense.createdTime, "yyyy")
+                                .toInt(),
+                        )
+                    }
+                }
+            dialog.dismiss()
+        }
 
         //view model
         val viewModelFactory =
@@ -66,7 +106,7 @@ class DetailActivity : AppCompatActivity() {
 
         //config recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-        expenseAdapter = ExpenseAdapter(this)
+        expenseAdapter = ExpenseAdapter(this, this)
         recyclerView.adapter = expenseAdapter
 
         setTextToPickerTextView()
@@ -92,57 +132,6 @@ class DetailActivity : AppCompatActivity() {
             .observe(this) { expenses ->
                 expenseAdapter.setExpense(expenses)
             }
-
-
-        //swipe
-        object : SwipeHelper(this, recyclerView, false) {
-
-            override fun instantiateUnderlayButton(
-                viewHolder: RecyclerView.ViewHolder?,
-                underlayButtons: MutableList<UnderlayButton>?
-            ) {
-
-                // Flag Button
-                underlayButtons?.add(UnderlayButton(
-                    "Delete",
-                    AppCompatResources.getDrawable(
-                        this@DetailActivity,
-                        R.drawable.ic_delete_2
-                    ),
-                    Color.parseColor("#b2bec3"), Color.parseColor("#34495e")
-
-                ) { pos: Int ->
-//                        adapter.notifyItemChanged(pos)
-                    val currentExpense = expenseAdapter.getExpense(pos)
-                    expenseViewModel.delete(currentExpense)
-                        .invokeOnCompletion { cause: Throwable? ->
-                            if (cause == null) {
-                                goalViewModel.updateGoalByMonthAndYear(
-                                    TimeUtils.timeFormat(currentExpense.createdTime, "MM").toInt(),
-                                    TimeUtils.timeFormat(currentExpense.createdTime, "yyyy")
-                                        .toInt(),
-                                )
-                            }
-                        }
-                })
-
-                // More Button
-                underlayButtons?.add(UnderlayButton(
-                    "Edit",
-                    AppCompatResources.getDrawable(
-                        this@DetailActivity,
-                        R.drawable.ic_edit_2
-                    ),
-                    Color.parseColor("#dfe6e9"), Color.parseColor("#34495e")
-
-                ) { pos: Int ->
-//                        adapter.notifyItemChanged(pos)
-                    val intent = Intent(this@DetailActivity, ExpenseActivity::class.java)
-                    intent.putExtra("id", expenseAdapter.getExpense(pos).id)
-                    startActivity(intent)
-                })
-            }
-        }
     }
 
     private fun showDateRangePicker() {
@@ -177,6 +166,16 @@ class DetailActivity : AppCompatActivity() {
         endDateTV.text = TimeUtils.timeFormat(endTime, "dd-MM-yyyy")
     }
 
+    override fun onClickItem(pos: Int) {
+        val intent = Intent(this@DetailActivity, ExpenseActivity::class.java)
+        intent.putExtra("id", expenseAdapter.getExpense(pos).id)
+        startActivity(intent)
+    }
+
+    override fun onClickMoreItem(pos: Int) {
+        dialog.show()
+        currentItemPos = pos
+    }
 }
 
 
