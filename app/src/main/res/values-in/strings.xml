@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Money Manager</string>
+    <string name="add_expense_title">Masukkan judul pengeluaran</string>
+    <string name="accept">Menerima</string>
+    <string name="date_range">Dari %1$s ke %2$s</string>
+    <string name="all_categories">semua Kategori</string>
+    <string name="welcome_text">Selamat datang di Money Manager!</string>
+    <string name="delete">Menghapus</string>
+    <string name="edit">Sunting</string>
+    <string name="from">Dari:</string>
+    <string name="empty_statistic">Anda belum memiliki catatan apa pun</string>
+    <string name="to">Ke:</string>
+</resources>

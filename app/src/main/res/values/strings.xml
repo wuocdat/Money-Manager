@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Money Manager</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="add_expense_title">Enter expense title</string>
     <string name="accept">Accept</string>
     <string name="date_range">From %1$s to %2$s</string>
     <string name="all_categories">All Categories</string>
-    <string name="preference_file_key">money_manager_001</string>
+    <string name="preference_file_key" translatable="false">money_manager_001</string>
     <string name="welcome_text">Welcome to money manager!</string>
     <string name="empty_statistic">You don\'t have any records yet</string>
     <string name="from">From:</string>
