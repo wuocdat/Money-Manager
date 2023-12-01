@@ -98,4 +98,12 @@
         android:layout_marginTop="8dp"
         android:text="Save" />
 
+    <Button
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:id="@+id/edit_fragment_cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/exit" />
+
 </LinearLayout>

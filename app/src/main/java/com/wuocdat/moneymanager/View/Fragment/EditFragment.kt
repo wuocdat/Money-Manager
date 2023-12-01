@@ -51,6 +51,7 @@ class EditFragment : Fragment() {
         moneyEditText = view.findViewById(R.id.edit_fragment_amount)
         dateEditText = view.findViewById(R.id.edit_fragment_date)
         saveButton = view.findViewById(R.id.edit_fragment_save_button)
+        val cancelButton: Button = view.findViewById(R.id.edit_fragment_cancel_button)
 
         val intent = requireActivity().intent
         val expenseId = intent.getIntExtra("id", 0)
@@ -103,6 +104,11 @@ class EditFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
+        }
+
+        cancelButton.setOnClickListener {
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager.popBackStack()
         }
 
     }

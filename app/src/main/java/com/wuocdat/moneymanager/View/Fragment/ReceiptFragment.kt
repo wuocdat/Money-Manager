@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,6 +25,7 @@ class ReceiptFragment : Fragment() {
     private lateinit var descriptionTextView: TextView
     private lateinit var totalTextView: TextView
     private lateinit var moveToEditButton: FloatingActionButton
+    private lateinit var cancelBtn: Button
 
     private lateinit var expenseViewModel: ExpenseViewModel
 
@@ -50,21 +52,26 @@ class ReceiptFragment : Fragment() {
         descriptionTextView = view.findViewById(R.id.receipt_fragment_description)
         totalTextView = view.findViewById(R.id.receipt_fragment_money)
         moveToEditButton = view.findViewById(R.id.receipt_fragment_floatingActionButton)
+        cancelBtn = view.findViewById(R.id.receipt_fragment_cancel_btn)
 
         moveToEditButton.setOnClickListener {
             moveToEditScreen(true)
         }
 
+        cancelBtn.setOnClickListener {
+            requireActivity().finish()
+        }
+
         val intent = requireActivity().intent
         val expenseId = intent.getIntExtra("id", 0)
 
-        expenseViewModel.getExpenseById(expenseId).observe(requireActivity(), Observer { expense ->
+        expenseViewModel.getExpenseById(expenseId).observe(requireActivity()) { expense ->
             dateTextView.text = TimeUtils.timeFormat(expense.createdTime)
             dateTimeTextView.text = TimeUtils.timeFormat(expense.createdTime)
             titleTextView.text = expense.expenseTitle
 //            descriptionTextView.text = expense.description
             totalTextView.text = StringUtils.convertToCurrencyFormat(expense.money)
-        })
+        }
     }
 
     private fun moveToEditScreen(withBackStack: Boolean) {

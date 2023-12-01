@@ -11,4 +11,5 @@
     <string name="from">Dari:</string>
     <string name="empty_statistic">Anda belum memiliki catatan apa pun</string>
     <string name="to">Ke:</string>
+    <string name="exit">Cancel</string>
 </resources>
