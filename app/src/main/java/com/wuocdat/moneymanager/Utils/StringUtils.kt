@@ -14,7 +14,7 @@ class StringUtils {
     companion object {
 
         fun convertToCurrencyFormat(number: Long): String {
-            val format = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
+            val format = NumberFormat.getCurrencyInstance()
 
             return format.format(number)
         }
