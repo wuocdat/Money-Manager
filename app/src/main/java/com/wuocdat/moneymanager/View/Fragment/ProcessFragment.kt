@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.NumberPicker
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarChart
@@ -79,10 +78,9 @@ class ProcessFragment : Fragment() {
         pieChart.setCenterTextColor(R.color.primary_color)
         expenseViewModel.getExpensesOfXMonth("$selectedYear-$selectedMonth")
             .observe(requireActivity()) { expenses ->
-                pieChart.centerText =
-                    if (expenses.isEmpty()) resources.getString(R.string.no_data_this_month) else resources.getString(
-                        R.string.this_month
-                    )
+                if (isAdded) pieChart.centerText =
+                    if (expenses.isEmpty()) resources.getString(R.string.no_data_this_month)
+                    else resources.getString(R.string.this_month)
                 setDataToPieChart(expenses)
             }
 
