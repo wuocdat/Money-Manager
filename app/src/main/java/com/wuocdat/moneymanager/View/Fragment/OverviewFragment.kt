@@ -57,9 +57,9 @@ class OverviewFragment : Fragment() {
         viewPager2.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
             tab.text = when (position) {
-                0 -> "EXPENSES"
-                1 -> "GOALS"
-                else -> "DID YOU KNOW?"
+                0 -> resources.getString(R.string.expenses)
+                1 -> resources.getString(R.string.goals)
+                else -> resources.getString(R.string.setting)
             }
         }.attach()
 

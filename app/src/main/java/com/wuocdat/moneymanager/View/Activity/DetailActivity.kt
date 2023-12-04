@@ -119,7 +119,8 @@ class DetailActivity : AppCompatActivity(), DetailInterface {
         menu.setText(defaultCategory ?: getString(R.string.all_categories), false)
         menu.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position).toString()
-            selectedCategory = if (selectedItem == "All Categories") "all" else selectedItem
+            selectedCategory =
+                if (selectedItem == resources.getString(R.string.all_categories)) "all" else selectedItem
             expenseViewModel.setCategory(selectedCategory)
         }
 

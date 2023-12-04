@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="4dp"
-            android:text="of your spendings" />
+            android:text="@string/of_your_spendings" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="8dp"
-                    android:text="Total spent this month"
+                    android:text="@string/total_spent_this_month"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -99,7 +99,7 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:paddingLeft="4dp"
-                        android:text="Watch your goals!"
+                        android:text="@string/watch_your_goals"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
                 </LinearLayout>

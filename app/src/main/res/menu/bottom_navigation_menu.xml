@@ -6,7 +6,7 @@
         android:id="@+id/menu_home"
         android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="Home"
+        android:title="@string/home"
         app:showAsAction="ifRoom"/>
 
     <item
@@ -21,7 +21,7 @@
         android:id="@+id/menu_process"
         android:enabled="true"
         android:icon="@drawable/ic_proccess"
-        android:title="History"
+        android:title="@string/history"
         app:showAsAction="always"/>
 
 </menu>

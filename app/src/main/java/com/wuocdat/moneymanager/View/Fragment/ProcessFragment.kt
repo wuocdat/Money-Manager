@@ -59,7 +59,7 @@ class ProcessFragment : Fragment() {
         val viewModelFactory =
             ExpenseViewModelFactory((requireActivity().application as MoneyManagerApplication).repository)
         expenseViewModel =
-            ViewModelProvider(this, viewModelFactory).get(ExpenseViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory)[ExpenseViewModel::class.java]
 
         pieChart = view.findViewById(R.id.pieChart)
         barChart = view.findViewById(R.id.barChart)
@@ -75,12 +75,14 @@ class ProcessFragment : Fragment() {
         //pieChart
         val l: Legend = pieChart.legend
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        pieChart.description.text = "Amount spent this month"
+        pieChart.description.text = resources.getString(R.string.amount_spent_this_month)
         pieChart.setCenterTextColor(R.color.primary_color)
         expenseViewModel.getExpensesOfXMonth("$selectedYear-$selectedMonth")
             .observe(requireActivity()) { expenses ->
                 pieChart.centerText =
-                    if (expenses.isEmpty()) "You don't have any data yet this month!" else "This Month"
+                    if (expenses.isEmpty()) resources.getString(R.string.no_data_this_month) else resources.getString(
+                        R.string.this_month
+                    )
                 setDataToPieChart(expenses)
             }
 
@@ -95,7 +97,7 @@ class ProcessFragment : Fragment() {
         xAxis.granularity = 1f
         xAxis.labelCount = xAxisLabels.size
         xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
-        barChart.description.text = "Spending of the months"
+        barChart.description.text = resources.getString(R.string.spending_of_months)
         barChart.setDrawBorders(true)
 
         expenseViewModel.getTotalAmountByMonthInSpecialYear(selectedYear)
@@ -162,7 +164,7 @@ class ProcessFragment : Fragment() {
         }
 
         val alertDialog = AlertDialog.Builder(requireContext())
-            .setTitle("Choose year")
+            .setTitle(resources.getString(R.string.choose_year))
             .setView(yearPicker)
             .setPositiveButton("OK") { _, _ ->
                 val year = yearPicker.value
@@ -173,7 +175,7 @@ class ProcessFragment : Fragment() {
                 val formattedMonth = "$selectedYear-$selectedMonth"
                 expenseViewModel.setMonthAndYearString(formattedMonth)
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(resources.getString(R.string.exit)) { dialog, _ ->
                 dialog.cancel()
             }
             .create()
@@ -190,7 +192,7 @@ class ProcessFragment : Fragment() {
         }
 
         val alertDialog = AlertDialog.Builder(requireContext())
-            .setTitle("Choose month")
+            .setTitle(resources.getString(R.string.choose_month))
             .setView(monthPicker)
             .setPositiveButton("OK") { _, _ ->
                 val month = monthPicker.value
@@ -199,7 +201,7 @@ class ProcessFragment : Fragment() {
                 monthBtn.text = selectedMonth
                 expenseViewModel.setMonthAndYearString(formattedMonth)
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(resources.getString(R.string.exit)) { dialog, _ ->
                 dialog.cancel()
             }
             .create()

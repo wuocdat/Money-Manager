@@ -31,7 +31,8 @@ class StatisticAdapter(
         val amountTV: TextView = itemView.findViewById(R.id.category_progress_item_amount)
         val numberTransactionTV: TextView =
             itemView.findViewById(R.id.category_progress_item_number_transaction)
-        val mainLayout: ConstraintLayout = itemView.findViewById(R.id.category_progress_item_main_layout)
+        val mainLayout: ConstraintLayout =
+            itemView.findViewById(R.id.category_progress_item_main_layout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatisticViewHolder {
@@ -71,8 +72,7 @@ class StatisticAdapter(
         holder.amountTV.text = StringUtils.convertToCurrencyFormat(currentStatistic.amount)
         val numberTransaction = currentStatistic.numberTransaction
         holder.numberTransactionTV.text =
-            if (numberTransaction > 1) "$numberTransaction Transactions"
-            else "$numberTransaction Transaction"
+            activity.resources.getString(R.string.transaction_times, numberTransaction)
         holder.mainLayout.setOnClickListener {
             listener.onClickItem(currentStatistic.category)
         }

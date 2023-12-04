@@ -23,7 +23,7 @@
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enter transaction name"
+                android:text="@string/enter_transaction_name"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Enter description"
+                android:text="@string/enter_description"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -67,13 +67,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Enter amount"
+                android:text="@string/enter_amount"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:helperTextEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -89,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Choose date and time"
+                android:text="@string/choose_date_and_time"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -110,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
-                    android:text="Date"
+                    android:text="@string/date"
                     android:textColor="@color/black"
                     app:icon="@drawable/ic_calendar"
                     app:iconTint="@color/black" />
@@ -123,7 +124,7 @@
                     android:layout_marginLeft="8dp"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
-                    android:text="Time"
+                    android:text="@string/time"
                     android:textColor="@color/black"
                     app:icon="@drawable/ic_calendar"
                     app:iconTint="@color/black" />
@@ -144,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Choose category"
+                android:text="@string/choose_category"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -162,14 +163,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="Save" />
+                android:text="@string/save" />
 
             <Button
                 android:id="@+id/cancelButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancel" />
+                android:text="@string/exit" />
         </LinearLayout>
     </ScrollView>
 

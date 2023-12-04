@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="8dp"
-        android:hint="Choose category">
+        android:hint="@string/choose_category">
 
         <AutoCompleteTextView
             android:id="@+id/detail_activity_menu"

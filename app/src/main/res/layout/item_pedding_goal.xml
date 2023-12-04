@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:gravity="right"
-                    android:text="Pending"
+                    android:text="@string/pending"
                     android:textColor="@color/darker_blue500"
                     android:textStyle="bold" />
             </LinearLayout>
