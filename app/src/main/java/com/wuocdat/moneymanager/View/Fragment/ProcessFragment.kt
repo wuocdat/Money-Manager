@@ -134,9 +134,14 @@ class ProcessFragment : Fragment() {
         for (item in StringUtils.categories) {
             val filteredExpenses =
                 expenses.filter { expense -> expense.category == item.categoryName }
-            if (filteredExpenses.isNotEmpty()) {
-                entries.add(PieEntry(filteredExpenses.map { it.money }
-                    .reduce { sum, money -> sum + money }.toFloat(), item.categoryName))
+            if (filteredExpenses.isNotEmpty() && isAdded) {
+                entries.add(
+                    PieEntry(
+                        filteredExpenses.map { it.money }
+                            .reduce { sum, money -> sum + money }.toFloat(),
+                        resources.getString(item.nameResId)
+                    )
+                )
             }
         }
 

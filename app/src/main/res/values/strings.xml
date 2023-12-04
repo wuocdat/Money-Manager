@@ -38,4 +38,23 @@
     <string name="choose_month">Choose month</string>
     <string name="transaction_times">%1$d times</string>
     <string name="of_your_spendings">of your spendings</string>
+    <string name="date_2">Date:</string>
+    <string name="expense_title">Expense title:</string>
+    <string name="description">Description</string>
+    <string name="total">Total</string>
+    <string name="expense_title_2">Expense Title</string>
+    <string name="amount">Amount</string>
+    <string name="time_helper_text">Enter in the following format: 12/08/1997</string>
+    <string name="description_2">Description</string>
+    <string name="edit_expense">Edit Expense</string>
+    <string name="medicine">Medicine</string>
+    <string name="shopping">Shopping</string>
+    <string name="device">Device</string>
+    <string name="commuting">Commuting</string>
+    <string name="drink">Drink</string>
+    <string name="fashion">Fashion</string>
+    <string name="food">Food</string>
+    <string name="haircut">Haircut</string>
+    <string name="repair">Repair</string>
+    <string name="others">Others</string>
 </resources>

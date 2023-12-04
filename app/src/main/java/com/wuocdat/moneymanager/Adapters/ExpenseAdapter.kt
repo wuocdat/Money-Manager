@@ -45,7 +45,8 @@ class ExpenseAdapter(private val activity: Activity, private val detailI: Detail
         val itemImgRes = getResImg(currentExpense.category)
 
         holder.textViewTitle.text = StringUtils.capFirstCharacter(currentExpense.expenseTitle)
-        holder.textViewCategory.text = currentExpense.category
+        holder.textViewCategory.text =
+            activity.resources.getString(getNameResId(currentExpense.category) ?: R.string.medicine)
         holder.textViewMoney.text = StringUtils.convertToCurrencyFormat(currentExpense.money)
         holder.textViewTime.text =
             TimeUtils.timeFormat(currentExpense.createdTime, "dd/MM/yyyy")
@@ -75,7 +76,7 @@ class ExpenseAdapter(private val activity: Activity, private val detailI: Detail
             detailI.onClickMoreItem(position)
         }
 
-        holder.card.setOnClickListener{
+        holder.card.setOnClickListener {
             detailI.onClickItem(position)
         }
 
@@ -102,5 +103,7 @@ class ExpenseAdapter(private val activity: Activity, private val detailI: Detail
         return StringUtils.categories.find { item -> item.categoryName == category }?.imageResId
     }
 
-
+    private fun getNameResId(category: String): Int? {
+        return StringUtils.categories.find { item -> item.categoryName == category }?.nameResId
+    }
 }

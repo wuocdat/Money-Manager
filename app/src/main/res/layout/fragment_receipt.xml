@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/receipt"
-                        android:text="Date:" />
+                        android:text="@string/date_2" />
 
                     <TextView
                         android:id="@+id/receipt_fragment_date"
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/receipt"
-                        android:text="Expense title:" />
+                        android:text="@string/expense_title" />
 
                     <TextView
                         android:id="@+id/receipt_fragment_title"
@@ -129,7 +129,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/receipt"
-                        android:text="Etiam Posuere"
                         android:textAlignment="textEnd" />
                 </LinearLayout>
 
@@ -139,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/receipt"
                     android:paddingVertical="8dp"
-                    android:text="Description"
+                    android:text="@string/description"
                     android:textStyle="bold" />
 
                 <TextView
@@ -161,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/receipt"
-                        android:text="Total" />
+                        android:text="@string/total" />
 
                     <TextView
                         android:id="@+id/receipt_fragment_money"

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -13,7 +12,6 @@ import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.wuocdat.moneymanager.Adapters.ExpenseAdapter
@@ -113,14 +111,20 @@ class DetailActivity : AppCompatActivity(), DetailInterface {
 
         //setMenu
         val options =
-            listOf(getString(R.string.all_categories)).plus(StringUtils.categories.map { item -> item.categoryName })
+            listOf(getString(R.string.all_categories)).plus(StringUtils.categories.map { item ->
+                resources.getString(
+                    item.nameResId
+                )
+            })
         val adapter = ArrayAdapter(this, R.layout.item_dropdown_category, options)
         menu.setAdapter(adapter)
-        menu.setText(defaultCategory ?: getString(R.string.all_categories), false)
-        menu.setOnItemClickListener { parent, _, position, _ ->
-            val selectedItem = parent.getItemAtPosition(position).toString()
+        menu.setText(
+            resources.getString(StringUtils.getNameResIdByCategoryName(defaultCategory)),
+            false
+        )
+        menu.setOnItemClickListener { _, _, position, _ ->
             selectedCategory =
-                if (selectedItem == resources.getString(R.string.all_categories)) "all" else selectedItem
+                if (position == 0) "all" else StringUtils.categories[position - 1].categoryName
             expenseViewModel.setCategory(selectedCategory)
         }
 

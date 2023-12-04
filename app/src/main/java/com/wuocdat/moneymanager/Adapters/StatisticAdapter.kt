@@ -68,7 +68,9 @@ class StatisticAdapter(
             )
         }
 
-        holder.titleTV.text = currentStatistic.category
+        holder.titleTV.text = activity.resources.getString(
+            getNameResId(currentStatistic.category)?:R.string.medicine
+        )
         holder.amountTV.text = StringUtils.convertToCurrencyFormat(currentStatistic.amount)
         val numberTransaction = currentStatistic.numberTransaction
         holder.numberTransactionTV.text =
@@ -93,5 +95,9 @@ class StatisticAdapter(
 
     private fun getResImg(category: String): Int? {
         return StringUtils.categories.find { item -> item.categoryName == category }?.imageResId
+    }
+
+    private fun getNameResId(category: String): Int? {
+        return StringUtils.categories.find { item -> item.categoryName == category }?.nameResId
     }
 }

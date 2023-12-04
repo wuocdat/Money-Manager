@@ -13,7 +13,7 @@
         android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Expense"
+        android:text="@string/edit_expense"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/primary_color"
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Expense Title"
+        android:hint="@string/expense_title_2"
         app:startIconDrawable="@drawable/ic_text">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Description"
+        android:hint="@string/description_2"
         app:startIconDrawable="@drawable/ic_text">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Amount"
+        android:hint="@string/amount"
         app:startIconDrawable="@drawable/ic_money">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -78,9 +78,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Date"
+        android:hint="@string/date"
         app:helperTextEnabled="true"
-        app:helperText="Enter in the following format: 12/08/1997"
+        app:helperText="@string/time_helper_text"
         app:startIconDrawable="@drawable/ic_calendar">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -96,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Save" />
+        android:text="@string/save" />
 
     <Button
         style="@style/Widget.MaterialComponents.Button.TextButton"

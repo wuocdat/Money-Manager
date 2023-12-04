@@ -1,7 +1,6 @@
 package com.wuocdat.moneymanager.Adapters
 
 import android.content.Context
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +45,7 @@ class CategoryAdapter(
         val currentItem = listData[position]
 
         holder.imageView.setImageResource(currentItem.imageResId)
-        holder.textView.text = currentItem.categoryName
+        holder.textView.text = context.resources.getString(currentItem.nameResId)
         holder.cardView.setCardBackgroundColor(context.getColor(currentItem.primaryColor))
         holder.container.setBackgroundColor(context.getColor(currentItem.secondaryColor))
 

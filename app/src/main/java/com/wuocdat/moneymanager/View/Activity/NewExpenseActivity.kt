@@ -1,10 +1,8 @@
 package com.wuocdat.moneymanager.View.Activity
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -54,20 +52,20 @@ class NewExpenseActivity : AppCompatActivity(), OnItemSelectedListener {
         setContentView(binding.root)
 
         //hide keyboard when focus outside of editText
-        hideSoftKeyboard();
+        hideSoftKeyboard()
 
         //view model
         val viewModelFactory =
             ExpenseViewModelFactory((application as MoneyManagerApplication).repository)
         expenseViewModel =
-            ViewModelProvider(this, viewModelFactory).get(ExpenseViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory)[ExpenseViewModel::class.java]
         val goalViewModelFactory =
             GoalViewModelFactory(
                 (application as MoneyManagerApplication).goalRepository,
                 (application as MoneyManagerApplication).repository
             )
         goalViewModel =
-            ViewModelProvider(this, goalViewModelFactory).get(GoalViewModel::class.java)
+            ViewModelProvider(this, goalViewModelFactory)[GoalViewModel::class.java]
 
         binding.newExpenseRC.layoutManager =
             GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
