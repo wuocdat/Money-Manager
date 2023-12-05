@@ -1,15 +1,17 @@
 package com.wuocdat.moneymanager.View.Fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.wuocdat.moneymanager.Model.Expense
 import com.wuocdat.moneymanager.MoneyManagerApplication
 import com.wuocdat.moneymanager.Services.Database
@@ -26,6 +28,7 @@ class EditFragment : Fragment() {
     private lateinit var moneyEditText: TextInputEditText
     private lateinit var dateEditText: TextInputEditText
     private lateinit var saveButton: Button
+    private lateinit var amountInputLayout: TextInputLayout
 
     private lateinit var expenseViewModel: ExpenseViewModel
 
@@ -51,7 +54,24 @@ class EditFragment : Fragment() {
         moneyEditText = view.findViewById(R.id.edit_fragment_amount)
         dateEditText = view.findViewById(R.id.edit_fragment_date)
         saveButton = view.findViewById(R.id.edit_fragment_save_button)
+        amountInputLayout = view.findViewById(R.id.edit_fragment_amount_input_layout)
         val cancelButton: Button = view.findViewById(R.id.edit_fragment_cancel_button)
+        moneyEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                amountInputLayout.helperText =
+                    StringUtils.convertToCurrencyFormat(
+                        if (text.toString().isEmpty()) 0 else text.toString().toLong()
+                    )
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
 
         val intent = requireActivity().intent
         val expenseId = intent.getIntExtra("id", 0)
@@ -69,7 +89,9 @@ class EditFragment : Fragment() {
 
             val newTitle = titleEditText.text.toString()
             val newDescription = descriptionEditText.text.toString()
-            val newAmount: Long = moneyEditText.text.toString().toLong()
+            val newAmount: Long =
+                if (moneyEditText.text.isNullOrBlank()) 0 else moneyEditText.text.toString()
+                    .toLong()
 
             val dateString = dateEditText.text.toString()
 
