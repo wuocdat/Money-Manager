@@ -22,7 +22,7 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/your_monthly_goal"
@@ -33,8 +33,8 @@
                 android:id="@+id/setting_fragment_goal_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="8dp"
-                android:text=" 2000$"
+                android:paddingHorizontal="8dp"
+                android:text="2000$"
                 android:textAlignment="textEnd" />
 
             <ImageView
@@ -60,7 +60,7 @@
 
             <TextView
                 android:id="@+id/textView12"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about"
