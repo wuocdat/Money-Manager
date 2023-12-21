@@ -57,4 +57,6 @@
     <string name="haircut">Haircut</string>
     <string name="repair">Repair</string>
     <string name="others">Others</string>
+    <string name="your_monthly_goal">Your Monthly Goal</string>
+    <string name="about">About</string>
 </resources>
