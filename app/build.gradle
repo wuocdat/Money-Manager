@@ -50,6 +50,9 @@ dependencies {
     // Dependencies for working with Architecture components
     // You'll probably have to update the version numbers in build.gradle (Project)
 
+    //datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     //navigation graph
     implementation("androidx.navigation:navigation-fragment:$nav_version")
     implementation("androidx.navigation:navigation-ui:$nav_version")
