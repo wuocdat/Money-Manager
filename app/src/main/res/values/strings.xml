@@ -59,4 +59,5 @@
     <string name="others">Others</string>
     <string name="your_monthly_goal" translatable="false">Your Monthly Goal</string>
     <string name="about" translatable="false">About</string>
+    <string name="updated_successfully" translatable="false">Updated successfully!</string>
 </resources>

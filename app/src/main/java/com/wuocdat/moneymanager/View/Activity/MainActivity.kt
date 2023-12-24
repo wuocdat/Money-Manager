@@ -3,9 +3,7 @@ package com.wuocdat.moneymanager.View.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -13,18 +11,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.wuocdat.moneymanager.Model.Goal
 import com.wuocdat.moneymanager.MoneyManagerApplication
+import com.wuocdat.moneymanager.Store.GoalStore
 import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.TimeUtils
-import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
-import com.wuocdat.moneymanager.ViewModel.ExpenseViewModelFactory
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.moneymanager.ViewModel.GoalViewModelFactory
 import com.wuocdat.roomdatabase.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var bottomNavigationView: BottomNavigationView
-    lateinit var fabButton: FloatingActionButton
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var fabButton: FloatingActionButton
 
     private lateinit var goalViewModel: GoalViewModel
 
@@ -66,24 +66,26 @@ class MainActivity : AppCompatActivity() {
                 (application as MoneyManagerApplication).repository
             )
         goalViewModel =
-            ViewModelProvider(this, viewModelFactory).get(GoalViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory)[GoalViewModel::class.java]
 
         val currentMonth = TimeUtils.getCurrentMonth().toInt()
         val currentYear = TimeUtils.getCurrentYear().toInt()
 
         goalViewModel.getGoalByMonthAndYear(currentMonth, currentYear)
-            .observe(this, Observer { goal ->
+            .observe(this) { goal ->
                 if (goal == null) {
-                    val goalOfCurrentMonth = Goal(
-                        MNConstants.DEFAULT_GOAL_AMOUNT.toLong(),
-                        0L,
-                        currentMonth,
-                        currentYear
-                    )
-                    goalViewModel.insert(goalOfCurrentMonth)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val savedGoalValue = GoalStore.read(this@MainActivity)
+                        val goalOfCurrentMonth = Goal(
+                            savedGoalValue.toLong(),
+                            0L,
+                            currentMonth,
+                            currentYear
+                        )
+                        goalViewModel.insert(goalOfCurrentMonth)
+                    }
                 }
-            })
-
+            }
     }
 
 }
