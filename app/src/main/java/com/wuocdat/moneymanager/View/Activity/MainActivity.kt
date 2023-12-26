@@ -3,9 +3,7 @@ package com.wuocdat.moneymanager.View.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -15,16 +13,14 @@ import com.wuocdat.moneymanager.Model.Goal
 import com.wuocdat.moneymanager.MoneyManagerApplication
 import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.TimeUtils
-import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
-import com.wuocdat.moneymanager.ViewModel.ExpenseViewModelFactory
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.moneymanager.ViewModel.GoalViewModelFactory
 import com.wuocdat.roomdatabase.R
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var bottomNavigationView: BottomNavigationView
-    lateinit var fabButton: FloatingActionButton
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var fabButton: FloatingActionButton
 
     private lateinit var goalViewModel: GoalViewModel
 
@@ -37,11 +33,19 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences =
             getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val firstLoginTime = sharedPreferences.getLong(MNConstants.FIRST_TIME, -1L)
+        val savedGoalValue = sharedPreferences.getLong(resources.getString(R.string.goal_share_preference_key), -1L)
 
         if (firstLoginTime == -1L && sharedPreferences != null) {
             val sharedPrefEditor = sharedPreferences.edit()
             sharedPrefEditor.putLong(MNConstants.FIRST_TIME, System.currentTimeMillis())
             sharedPrefEditor.apply()
+        }
+
+        // check if goal value is saved
+        if (savedGoalValue == -1L && sharedPreferences != null) {
+            val intent = Intent(this, GoalActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         fabButton = findViewById(R.id.fab)
@@ -66,24 +70,23 @@ class MainActivity : AppCompatActivity() {
                 (application as MoneyManagerApplication).repository
             )
         goalViewModel =
-            ViewModelProvider(this, viewModelFactory).get(GoalViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory)[GoalViewModel::class.java]
 
         val currentMonth = TimeUtils.getCurrentMonth().toInt()
         val currentYear = TimeUtils.getCurrentYear().toInt()
 
         goalViewModel.getGoalByMonthAndYear(currentMonth, currentYear)
-            .observe(this, Observer { goal ->
+            .observe(this) { goal ->
                 if (goal == null) {
                     val goalOfCurrentMonth = Goal(
-                        MNConstants.DEFAULT_GOAL_AMOUNT.toLong(),
+                        savedGoalValue,
                         0L,
                         currentMonth,
                         currentYear
                     )
                     goalViewModel.insert(goalOfCurrentMonth)
                 }
-            })
-
+            }
     }
 
 }

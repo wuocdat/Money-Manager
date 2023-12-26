@@ -14,6 +14,9 @@
         android:theme="@style/Theme.MoneyManager"
         tools:targetApi="31">
         <activity
+            android:name="com.wuocdat.moneymanager.View.Activity.GoalActivity"
+            android:exported="false" />
+        <activity
             android:name="com.wuocdat.moneymanager.View.Activity.ExpenseActivity"
             android:exported="false">
             <meta-data
@@ -22,9 +25,9 @@
         </activity>
         <activity
             android:name="com.wuocdat.moneymanager.View.Activity.DetailActivity"
+            android:exported="false"
             android:parentActivityName="com.wuocdat.moneymanager.View.Activity.MainActivity"
-            android:theme="@style/Theme.ExpensesActivity"
-            android:exported="false">
+            android:theme="@style/Theme.ExpensesActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -41,9 +44,8 @@
         </activity>
         <activity
             android:name="com.wuocdat.moneymanager.View.Activity.MainActivity"
-            android:theme="@style/Theme.MainActivity"
-            android:exported="true">
-
+            android:exported="true"
+            android:theme="@style/Theme.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
