@@ -60,4 +60,5 @@
     <string name="your_monthly_goal" translatable="false">Your Monthly Goal</string>
     <string name="about" translatable="false">About</string>
     <string name="updated_successfully" translatable="false">Updated successfully!</string>
+    <string name="enter_goal_title">Enter your monthly spending limit</string>
 </resources>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wuocdat.moneymanager.Store.GoalStore
+import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.View.Activity.GoalActivity
 import com.wuocdat.roomdatabase.databinding.FragmentSettingBinding
@@ -38,7 +39,9 @@ class SettingFragment : Fragment() {
         }
         binding.settingFragmentGoalLayout.setOnClickListener {
             val intent = Intent(requireContext(), GoalActivity::class.java)
+            intent.putExtra(MNConstants.WITH_CANCEL_BTN_GOAL_ACTIVITY_KEY, true)
             startActivity(intent)
+            requireActivity().finish()
         }
     }
 

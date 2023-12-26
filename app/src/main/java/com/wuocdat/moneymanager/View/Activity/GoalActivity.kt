@@ -1,11 +1,14 @@
 package com.wuocdat.moneymanager.View.Activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import com.wuocdat.moneymanager.Store.GoalStore
+import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.roomdatabase.R
 import com.wuocdat.roomdatabase.databinding.ActivityGoalBinding
@@ -23,6 +26,10 @@ class GoalActivity : AppCompatActivity() {
         binding = ActivityGoalBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.title = resources.getString(R.string.your_monthly_goal)
+
+        val withCancelBtn = intent.getBooleanExtra(MNConstants.WITH_CANCEL_BTN_GOAL_ACTIVITY_KEY, false)
+        if (!withCancelBtn) binding.goalActivityCancelBtn.visibility = View.GONE
+        binding.goalActivityCancelBtn.setOnClickListener { handleFinish() }
 
         getCurrentGoal()
 
@@ -69,6 +76,13 @@ class GoalActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+                handleFinish()
             }
+    }
+
+    private fun handleFinish() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
