@@ -56,4 +56,5 @@
     <string name="repair">Repair</string>
     <string name="others">Others</string>
     <string name="enter_goal_title">Enter your monthly spending limit</string>
+    <string name="next">Next</string>
 </resources>
