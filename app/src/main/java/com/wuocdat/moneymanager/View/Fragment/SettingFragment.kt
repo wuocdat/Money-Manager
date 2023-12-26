@@ -1,20 +1,17 @@
 package com.wuocdat.moneymanager.View.Fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.wuocdat.moneymanager.Store.GoalStore
+import androidx.fragment.app.Fragment
 import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.moneymanager.View.Activity.GoalActivity
+import com.wuocdat.roomdatabase.R
 import com.wuocdat.roomdatabase.databinding.FragmentSettingBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SettingFragment : Fragment() {
 
@@ -30,13 +27,20 @@ class SettingFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val goalValue = GoalStore.read(requireContext())
-            withContext(Dispatchers.Main) {
-                binding.settingFragmentGoalTv.text =
-                    StringUtils.convertToCurrencyFormat(goalValue.toLong())
-            }
-        }
+        // get goal value
+        val sharedPreferences =
+            requireActivity().getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+            )
+        val savedGoalValue = sharedPreferences.getLong(
+            resources.getString(R.string.goal_share_preference_key),
+            MNConstants.DEFAULT_GOAL_AMOUNT
+        )
+        binding.settingFragmentGoalTv.text =
+            StringUtils.convertToCurrencyFormat(savedGoalValue)
+
+        // navigate to set goal activity
         binding.settingFragmentGoalLayout.setOnClickListener {
             val intent = Intent(requireContext(), GoalActivity::class.java)
             intent.putExtra(MNConstants.WITH_CANCEL_BTN_GOAL_ACTIVITY_KEY, true)

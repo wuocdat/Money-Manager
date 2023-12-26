@@ -1,25 +1,22 @@
 package com.wuocdat.moneymanager.View.Activity
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
-import com.wuocdat.moneymanager.Store.GoalStore
+import androidx.appcompat.app.AppCompatActivity
 import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.StringUtils
 import com.wuocdat.roomdatabase.R
 import com.wuocdat.roomdatabase.databinding.ActivityGoalBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class GoalActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGoalBinding
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +24,23 @@ class GoalActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.title = resources.getString(R.string.your_monthly_goal)
 
-        val withCancelBtn = intent.getBooleanExtra(MNConstants.WITH_CANCEL_BTN_GOAL_ACTIVITY_KEY, false)
-        if (!withCancelBtn) binding.goalActivityCancelBtn.visibility = View.GONE
-        binding.goalActivityCancelBtn.setOnClickListener { handleFinish() }
+        // get saved goal value
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val savedGoalValue = sharedPreferences.getLong(
+            resources.getString(R.string.goal_share_preference_key),
+            MNConstants.DEFAULT_GOAL_AMOUNT
+        )
+        binding.activityGoalInputEt.setText(savedGoalValue.toString())
 
-        getCurrentGoal()
+        val withCancelBtn =
+            intent.getBooleanExtra(MNConstants.WITH_CANCEL_BTN_GOAL_ACTIVITY_KEY, false)
+        if (!withCancelBtn) {
+            binding.goalActivityCancelBtn.visibility = View.GONE
+            binding.goalActivitySaveBtn.text = resources.getString(R.string.next)
+        }
+
+        binding.goalActivityCancelBtn.setOnClickListener { handleFinish() }
 
         binding.activityGoalInputEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -54,30 +63,18 @@ class GoalActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentGoal() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val savedGoal = GoalStore.read(this@GoalActivity)
-            withContext(Dispatchers.Main) {
-                binding.activityGoalInputEt.setText(savedGoal.toString())
-            }
-        }
-    }
-
     private fun updateGoal() {
         val inputValue = binding.activityGoalInputEt.text.toString()
-        val newGoal = inputValue.toIntOrNull()
-        if (newGoal != null && newGoal != 0)
-            CoroutineScope(Dispatchers.IO).launch {
-                GoalStore.save(newGoal, this@GoalActivity)
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@GoalActivity,
-                        resources.getString(R.string.updated_successfully),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                handleFinish()
-            }
+        val newGoal = inputValue.toLongOrNull()
+        if (newGoal != null && newGoal != 0L) {
+            val sharedPrefEditor = sharedPreferences.edit()
+            sharedPrefEditor.putLong(
+                resources.getString(R.string.goal_share_preference_key),
+                newGoal
+            )
+            sharedPrefEditor.apply()
+            handleFinish()
+        }
     }
 
     private fun handleFinish() {

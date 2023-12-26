@@ -11,15 +11,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.wuocdat.moneymanager.Model.Goal
 import com.wuocdat.moneymanager.MoneyManagerApplication
-import com.wuocdat.moneymanager.Store.GoalStore
 import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.TimeUtils
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.moneymanager.ViewModel.GoalViewModelFactory
 import com.wuocdat.roomdatabase.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,11 +33,19 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences =
             getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val firstLoginTime = sharedPreferences.getLong(MNConstants.FIRST_TIME, -1L)
+        val savedGoalValue = sharedPreferences.getLong(resources.getString(R.string.goal_share_preference_key), -1L)
 
         if (firstLoginTime == -1L && sharedPreferences != null) {
             val sharedPrefEditor = sharedPreferences.edit()
             sharedPrefEditor.putLong(MNConstants.FIRST_TIME, System.currentTimeMillis())
             sharedPrefEditor.apply()
+        }
+
+        // check if goal value is saved
+        if (savedGoalValue == -1L && sharedPreferences != null) {
+            val intent = Intent(this, GoalActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         fabButton = findViewById(R.id.fab)
@@ -74,16 +78,13 @@ class MainActivity : AppCompatActivity() {
         goalViewModel.getGoalByMonthAndYear(currentMonth, currentYear)
             .observe(this) { goal ->
                 if (goal == null) {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val savedGoalValue = GoalStore.read(this@MainActivity)
-                        val goalOfCurrentMonth = Goal(
-                            savedGoalValue.toLong(),
-                            0L,
-                            currentMonth,
-                            currentYear
-                        )
-                        goalViewModel.insert(goalOfCurrentMonth)
-                    }
+                    val goalOfCurrentMonth = Goal(
+                        savedGoalValue,
+                        0L,
+                        currentMonth,
+                        currentYear
+                    )
+                    goalViewModel.insert(goalOfCurrentMonth)
                 }
             }
     }
