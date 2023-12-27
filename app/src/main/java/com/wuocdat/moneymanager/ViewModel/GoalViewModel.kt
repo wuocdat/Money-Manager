@@ -1,6 +1,5 @@
 package com.wuocdat.moneymanager.ViewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -43,9 +42,18 @@ class GoalViewModel(
         repository.updateAmountByMonthAndYear(goalAmount.totalAmount, month, year)
     }
 
+
+    fun updateTargetAmountByMonthAndYear(amount: Long, month: Int, year: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateTargetAmountByMonthAndYear(amount, month, year)
+        }
+
 }
 
-class GoalViewModelFactory(private var repository: GoalRepository, private var eRepository: ExpenseRepository) :
+class GoalViewModelFactory(
+    private var repository: GoalRepository,
+    private var eRepository: ExpenseRepository
+) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(GoalViewModel::class.java)) {

@@ -36,4 +36,9 @@ class GoalRepository(private val goalDAO: GoalDAO) {
     suspend fun updateAmountByMonthAndYear(addedAmount: Long, month: Int, year: Int) {
         goalDAO.updateAmountByMonthAndYear(addedAmount, month, year)
     }
+
+    @WorkerThread
+    suspend fun updateTargetAmountByMonthAndYear(amount: Long, month: Int, year: Int) {
+        goalDAO.updateTargetAmountByMonthAndYear(amount, month, year)
+    }
 }

@@ -8,21 +8,40 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.wuocdat.moneymanager.MoneyManagerApplication
 import com.wuocdat.moneymanager.Utils.MNConstants
 import com.wuocdat.moneymanager.Utils.StringUtils
+import com.wuocdat.moneymanager.ViewModel.GoalViewModel
+import com.wuocdat.moneymanager.ViewModel.GoalViewModelFactory
 import com.wuocdat.roomdatabase.R
 import com.wuocdat.roomdatabase.databinding.ActivityGoalBinding
+import java.util.Calendar
 
 class GoalActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGoalBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var goalViewModel: GoalViewModel
+
+    private val calendar = Calendar.getInstance()
+    private var year = calendar.get(Calendar.YEAR)
+    private var month = calendar.get(Calendar.MONTH) + 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGoalBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.title = resources.getString(R.string.your_monthly_goal)
+
+        // set model
+        val goalViewModelFactory =
+            GoalViewModelFactory(
+                (application as MoneyManagerApplication).goalRepository,
+                (application as MoneyManagerApplication).repository
+            )
+        goalViewModel =
+            ViewModelProvider(this, goalViewModelFactory)[GoalViewModel::class.java]
 
         // get saved goal value
         sharedPreferences =
@@ -73,7 +92,12 @@ class GoalActivity : AppCompatActivity() {
                 newGoal
             )
             sharedPrefEditor.apply()
-            handleFinish()
+            goalViewModel.updateTargetAmountByMonthAndYear(newGoal, month, year)
+                .invokeOnCompletion { cause: Throwable? ->
+                    if (cause == null) {
+                        handleFinish()
+                    }
+                }
         }
     }
 

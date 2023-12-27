@@ -25,4 +25,7 @@ interface GoalDAO {
 
     @Query("UPDATE goal_table SET currentAmount = :amount WHERE month = :month AND year = :year")
     suspend fun updateAmountByMonthAndYear(amount: Long, month: Int, year: Int)
+
+    @Query("UPDATE goal_table SET targetAmount = :amount WHERE month = :month AND year = :year")
+    suspend fun updateTargetAmountByMonthAndYear(amount: Long, month: Int, year: Int)
 }
