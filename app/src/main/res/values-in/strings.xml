@@ -55,6 +55,9 @@
     <string name="haircut">Haircut</string>
     <string name="repair">Repair</string>
     <string name="others">Others</string>
+    <string name="your_monthly_goal">Sasaran Bulanan Anda</string>
+    <string name="about">About Us</string>
+    <string name="updated_successfully">Berhasil diperbarui!</string>
     <string name="enter_goal_title">Enter your monthly spending limit</string>
     <string name="next">Next</string>
 </resources>
