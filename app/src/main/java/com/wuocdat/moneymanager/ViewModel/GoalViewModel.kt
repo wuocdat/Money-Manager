@@ -42,12 +42,10 @@ class GoalViewModel(
         repository.updateAmountByMonthAndYear(goalAmount.totalAmount, month, year)
     }
 
-
     fun updateTargetAmountByMonthAndYear(amount: Long, month: Int, year: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateTargetAmountByMonthAndYear(amount, month, year)
         }
-
 }
 
 class GoalViewModelFactory(

@@ -1,5 +1,6 @@
 package com.wuocdat.moneymanager.View.Fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -46,6 +47,17 @@ class SettingFragment : Fragment() {
             intent.putExtra(MNConstants.WITH_CANCEL_BTN_GOAL_ACTIVITY_KEY, true)
             startActivity(intent)
             requireActivity().finish()
+        }
+
+        // open about dialog
+        binding.settingFragmentAboutLayout.setOnClickListener {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder
+                .setMessage(getString(R.string.about_mess))
+                .setTitle(getString(R.string.about))
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 
