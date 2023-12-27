@@ -50,7 +50,6 @@ class GoalActivity : AppCompatActivity() {
             resources.getString(R.string.goal_share_preference_key),
             MNConstants.DEFAULT_GOAL_AMOUNT
         )
-        binding.activityGoalInputEt.setText(savedGoalValue.toString())
 
         val withCancelBtn =
             intent.getBooleanExtra(MNConstants.WITH_CANCEL_BTN_GOAL_ACTIVITY_KEY, false)
@@ -76,6 +75,7 @@ class GoalActivity : AppCompatActivity() {
             }
 
         })
+        binding.activityGoalInputEt.setText(savedGoalValue.toString())
 
         binding.goalActivitySaveBtn.setOnClickListener {
             updateGoal()
