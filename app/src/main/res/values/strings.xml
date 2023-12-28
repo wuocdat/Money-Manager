@@ -64,4 +64,5 @@
     <string name="goal_share_preference_key" translatable="false">goal_share_preference_key</string>
     <string name="next">Next</string>
     <string name="about_mess" translatable="false">Version 1.0.0, released on January 1, 2024 by @wuocdat.\nPhone +84 817 717 845.</string>
+    <string name="percent_text" translatable="false">%1$d%%</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.wuocdat.moneymanager.View.Fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +28,7 @@ class OverviewFragment : Fragment() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var tabLayout: TabLayout
     private lateinit var watchLayout: LinearLayout
+    private lateinit var percentTextView: TextView
 
     private lateinit var goalVM: GoalViewModel
 
@@ -47,6 +49,7 @@ class OverviewFragment : Fragment() {
         viewPager2 = view.findViewById(R.id.overview_fragment_view_pager)
         tabLayout = view.findViewById(R.id.overview_fragment_tab_layout)
         watchLayout = view.findViewById(R.id.frag_watch_goals_layout)
+        percentTextView = view.findViewById(R.id.overview_fragment_percent_text)
 
         //set view models
         goalVM = Database.getGoalViewModel(this, requireActivity().application)
@@ -81,8 +84,14 @@ class OverviewFragment : Fragment() {
                     Log.d("total", goal.currentAmount.toString())
                     totalMoneyTextView.text =
                         StringUtils.convertToCurrencyFormat(goal.currentAmount)
-                    progress.progress =
+                    val progressPercent =
                         ((goal.currentAmount.toDouble() / goal.targetAmount.toDouble()) * 100).toInt()
+                    progress.progress = progressPercent
+                    percentTextView.text = getString(R.string.percent_text, progressPercent)
+                    if (progressPercent > 90) {
+                        progress.setIndicatorColor(Color.RED)
+                        percentTextView.setTextColor(Color.RED)
+                    }
                 } else {
                     progress.progress = 0
                 }
