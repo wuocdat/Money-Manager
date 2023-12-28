@@ -65,4 +65,7 @@
     <string name="next">Next</string>
     <string name="about_mess" translatable="false">Version 1.0.0, released on January 1, 2024 by @wuocdat.\nPhone +84 817 717 845.</string>
     <string name="percent_text" translatable="false">%1$d%%</string>
+    <string name="lack_of_info">Please check the information again!</string>
+    <string name="created_exp_successfully">Successfully created new expense!</string>
+    <string name="date_format_invalid">Date format invalid</string>
 </resources>

@@ -60,4 +60,7 @@
     <string name="about">About Us</string>
     <string name="updated_successfully">Cập nhật thành công!</string>
     <string name="enter_goal_title">Nhập mức chi hàng tháng\ncủa bạn</string>
+    <string name="lack_of_info">Vui lòng kiểm tra lại thông tin!</string>
+    <string name="created_exp_successfully">Đã tạo thành công bản ghi mới!</string>
+    <string name="date_format_invalid">Định dạng ngày tháng không đúng!</string>
 </resources>

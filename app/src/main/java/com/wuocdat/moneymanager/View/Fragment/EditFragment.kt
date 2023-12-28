@@ -113,7 +113,7 @@ class EditFragment : Fragment() {
 
                 Toast.makeText(
                     requireContext().applicationContext,
-                    "Expense Information is updated",
+                    getString(R.string.updated_successfully),
                     Toast.LENGTH_SHORT
                 )
                     .show()
@@ -122,7 +122,7 @@ class EditFragment : Fragment() {
             } else
                 Toast.makeText(
                     requireContext(),
-                    "Date invalid",
+                    getString(R.string.date_format_invalid),
                     Toast.LENGTH_SHORT
                 )
                     .show()

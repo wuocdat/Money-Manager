@@ -24,6 +24,7 @@ import com.wuocdat.moneymanager.ViewModel.ExpenseViewModel
 import com.wuocdat.moneymanager.ViewModel.ExpenseViewModelFactory
 import com.wuocdat.moneymanager.ViewModel.GoalViewModel
 import com.wuocdat.moneymanager.ViewModel.GoalViewModelFactory
+import com.wuocdat.roomdatabase.R
 import com.wuocdat.roomdatabase.databinding.ActivityNewExpenseBinding
 import java.util.Calendar
 
@@ -155,14 +156,14 @@ class NewExpenseActivity : AppCompatActivity(), OnItemSelectedListener {
 
                 Toast.makeText(
                     applicationContext,
-                    "Successfully created new expense!",
+                    getString(R.string.created_exp_successfully),
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
             } else
                 Toast.makeText(
                     applicationContext,
-                    "Please check the information again!",
+                    getString(R.string.lack_of_info),
                     Toast.LENGTH_SHORT
                 ).show()
         }

@@ -60,4 +60,7 @@
     <string name="updated_successfully">Berhasil diperbarui!</string>
     <string name="enter_goal_title">Enter your monthly spending limit</string>
     <string name="next">Next</string>
+    <string name="lack_of_info">Silakan periksa kembali informasinya!</string>
+    <string name="created_exp_successfully">Berhasil membuat pengeluaran baru!</string>
+    <string name="date_format_invalid">Format tanggal tidak valid</string>
 </resources>
