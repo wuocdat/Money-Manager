@@ -20,12 +20,13 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="24dp"
                 android:text="@string/edit_expense"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/primary_color"
-                android:textSize="48sp"
+                android:textSize="36sp"
                 android:textStyle="bold" />
 
 
