@@ -31,13 +31,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/expense_title_length">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameTransaction"
-                    android:maxLines="1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:maxLength="@integer/expense_title_length"
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,13 +56,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/description_length">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/descriptionTrans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="4" />
+                    android:lines="4"
+                    android:maxLength="@integer/description_length" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,16 +79,18 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/new_exp_activity_amount_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:helperTextEnabled="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/AmountTrans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="@integer/money_amount_input_length" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,7 +129,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
                     android:text="@string/time"

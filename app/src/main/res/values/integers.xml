@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="expense_title_length">50</integer>
+    <integer name="description_length">300</integer>
+    <integer name="money_amount_input_length">15</integer>
+</resources>

@@ -73,7 +73,6 @@ class GoalActivity : AppCompatActivity() {
 
             override fun afterTextChanged(p0: Editable?) {
             }
-
         })
         binding.activityGoalInputEt.setText(savedGoalValue.toString())
 

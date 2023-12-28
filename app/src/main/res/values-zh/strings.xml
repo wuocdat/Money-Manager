@@ -42,7 +42,7 @@
     <string name="total">全部的</string>
     <string name="expense_title_2">费用名称</string>
     <string name="amount">数量</string>
-    <string name="time_helper_text">输入以下格式：12/08/1997</string>
+    <string name="time_helper_text">输入以下格式：24/08/1997</string>
     <string name="description_2">描述</string>
     <string name="edit_expense">编辑费用</string>
     <string name="medicine">药品</string>

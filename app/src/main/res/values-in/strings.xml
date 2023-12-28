@@ -42,7 +42,7 @@
     <string name="total">Total</string>
     <string name="expense_title_2">Expense Title</string>
     <string name="amount">Amount</string>
-    <string name="time_helper_text">Enter in the following format: 12/08/1997</string>
+    <string name="time_helper_text">Enter in the following format: 24/08/1997</string>
     <string name="description_2">Description</string>
     <string name="edit_expense">Edit Expense</string>
     <string name="medicine">Medicine</string>

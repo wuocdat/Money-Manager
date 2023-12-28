@@ -3,6 +3,8 @@ package com.wuocdat.moneymanager.View.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -112,6 +114,21 @@ class NewExpenseActivity : AppCompatActivity(), OnItemSelectedListener {
         binding.cancelButton.setOnClickListener {
             finish()
         }
+
+        binding.AmountTrans.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.newExpActivityAmountInputLayout.helperText =
+                    StringUtils.convertToCurrencyFormat(
+                        if (text.toString().isEmpty()) 0 else text.toString().toLong()
+                    )
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
 
         binding.saveButton.setOnClickListener {
             val nameTrans = binding.nameTransaction.text.toString()

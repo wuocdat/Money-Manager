@@ -42,7 +42,7 @@
     <string name="total">Tổng</string>
     <string name="expense_title_2">Tiêu đề</string>
     <string name="amount">Số tiền</string>
-    <string name="time_helper_text">Nhập ngày tháng theo định dạng sau: 12/08/1997</string>
+    <string name="time_helper_text">Nhập ngày tháng theo định dạng sau: 24/08/1997</string>
     <string name="description_2">Mô tả</string>
     <string name="edit_expense">Sửa Đổi Bản Ghi</string>
     <string name="medicine">Y Tế</string>

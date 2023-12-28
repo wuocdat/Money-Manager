@@ -33,12 +33,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:hint="@string/expense_title_2"
+        app:counterEnabled="true"
+        app:counterMaxLength="@integer/expense_title_length"
         app:startIconDrawable="@drawable/ic_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_fragment_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxLength="@integer/expense_title_length" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,12 +51,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:hint="@string/description_2"
+        app:counterEnabled="true"
+        app:counterMaxLength="@integer/description_length"
         app:startIconDrawable="@drawable/ic_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_fragment_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxLength="@integer/description_length" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +76,8 @@
             android:id="@+id/edit_fragment_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxLength="@integer/money_amount_input_length" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
