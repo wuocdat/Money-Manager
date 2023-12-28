@@ -13,6 +13,7 @@
 <!--    <color name="primary_color">#FF5722</color>-->
     <color name="primary_color">#8acb00</color>
     <color name="secondary_color">#FFAB91</color>
+    <color name="blur_red">#fab1a0</color>
 
     <color name="light_purple">#c56cf0</color>
     <color name="young_salmon">#ffb8b8</color>
