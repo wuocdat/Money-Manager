@@ -72,6 +72,7 @@ class DetailActivity : AppCompatActivity(), DetailInterface {
             intent.putExtra("id", expenseAdapter.getExpense(currentItemPos).id)
             intent.putExtra("edit_screen", true)
             startActivity(intent)
+            dialog.dismiss()
         }
         deleteLayout.setOnClickListener {
             val currentExpense = expenseAdapter.getExpense(currentItemPos)

@@ -117,8 +117,7 @@ class EditFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
-                val fragmentManager = requireActivity().supportFragmentManager
-                fragmentManager.popBackStack()
+                goBack()
             } else
                 Toast.makeText(
                     requireContext(),
@@ -128,11 +127,15 @@ class EditFragment : Fragment() {
                     .show()
         }
 
-        cancelButton.setOnClickListener {
-            val fragmentManager = requireActivity().supportFragmentManager
-            fragmentManager.popBackStack()
-        }
+        cancelButton.setOnClickListener { goBack() }
+    }
 
+    private fun goBack() {
+        val fragmentManager = requireActivity().supportFragmentManager
+        if (fragmentManager.backStackEntryCount == 0) {
+            requireActivity().finish()
+        } else
+            fragmentManager.popBackStack()
     }
 
 }
