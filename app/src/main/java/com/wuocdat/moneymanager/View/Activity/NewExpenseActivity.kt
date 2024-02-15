@@ -89,7 +89,7 @@ class NewExpenseActivity : AppCompatActivity(), OnItemSelectedListener {
                     resetDateTV()
                 },
                 year,
-                month,
+                month - 1,
                 day
             )
             datePickerDialog.show()
