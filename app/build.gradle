@@ -86,6 +86,9 @@ dependencies {
     //date range piker
     implementation "com.andrewjapar.rangedatepicker:rangedatepicker:$rootProject.rangedatepicker"
 
+    //ads mod
+    implementation 'com.google.android.gms:play-services-ads-lite:22.6.0'
+
     // Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"

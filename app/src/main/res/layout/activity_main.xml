@@ -14,7 +14,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="100dp"
+        android:paddingBottom="@dimen/main_frag_padding_bottom"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/ads_banner_height"
         app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="10dp"
         app:fabCradleVerticalOffset="10dp">
@@ -35,6 +36,18 @@
             app:menu="@menu/bottom_navigation_menu" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3185416454335429/6069667402">
+    </com.google.android.gms.ads.AdView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

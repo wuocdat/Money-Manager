@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.wuocdat.moneymanager.Model.Goal
@@ -21,12 +24,19 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var fabButton: FloatingActionButton
+    lateinit var mAdView : AdView
 
     private lateinit var goalViewModel: GoalViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        MobileAds.initialize(this) {}
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         supportActionBar?.title = resources.getString(R.string.welcome_text)
 
