@@ -63,4 +63,8 @@
     <string name="lack_of_info">Silakan periksa kembali informasinya!</string>
     <string name="created_exp_successfully">Berhasil membuat pengeluaran baru!</string>
     <string name="date_format_invalid">Format tanggal tidak valid</string>
+    <string name="range_date_picker_calendar">pilih rentang tanggal</string>
+    <string name="filtered_expense_list">Hasil daftar pengeluaran</string>
+    <string name="expense_category_logo">Logo kategori</string>
+    <string name="selected_category_icon">ikon kategori yang dipilih</string>
 </resources>

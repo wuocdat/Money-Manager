@@ -11,11 +11,11 @@
 
     <item
         android:enabled="false"
-        android:title="Home" />
+        android:title="@string/home_hidden" />
 
     <item
         android:enabled="false"
-        android:title="History" />
+        android:title="@string/history_hidden" />
 
     <item
         android:id="@+id/menu_process"

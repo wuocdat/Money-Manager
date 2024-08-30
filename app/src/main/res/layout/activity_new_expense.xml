@@ -39,6 +39,7 @@
                     android:id="@+id/nameTransaction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/add_expense_title"
                     android:maxLength="@integer/expense_title_length"
                     android:maxLines="1" />
 
@@ -64,6 +65,7 @@
                     android:id="@+id/descriptionTrans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/enter_description"
                     android:lines="4"
                     android:maxLength="@integer/description_length" />
 
@@ -90,6 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:hint="@string/enter_amount"
                     android:maxLength="@integer/money_amount_input_length" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -116,7 +119,7 @@
                     android:id="@+id/chooseDateButton"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
                     android:text="@string/date"
@@ -128,7 +131,7 @@
                     android:id="@+id/chooseTimeButton"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_marginStart="8dp"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
@@ -143,7 +146,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="clip_vertical|center_vertical|end"
-                    android:text="20 Apr, 2023"
+                    android:text="@string/_20_apr_2023"
                     android:textAlignment="gravity"
                     android:textColor="@color/black" />
 

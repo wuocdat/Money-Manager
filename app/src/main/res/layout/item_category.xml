@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
@@ -21,6 +20,7 @@
             android:id="@+id/item_category_container"
             android:layout_width="140dp"
             android:layout_height="35dp"
+            android:contentDescription="@string/category_selection_item"
             android:background="@color/red200"
             android:gravity="center_vertical"
             android:paddingHorizontal="4dp"
@@ -40,6 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="4dp"
+                    android:contentDescription="@string/expense_category_logo"
                     app:srcCompat="@drawable/ic_device"
                     app:tint="@color/white" />
             </androidx.cardview.widget.CardView>
@@ -49,19 +50,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:paddingLeft="8dp"
-                android:paddingRight="16dp"
-                android:text="Commuting"
+                android:paddingStart="8dp"
+                android:paddingEnd="16dp"
+                android:text="@string/commuting"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/item_category_check_image"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:visibility="gone"
+                android:contentDescription="@string/selected_category_icon"
                 app:srcCompat="@drawable/ic_check"
                 app:tint="@color/white" />
         </LinearLayout>

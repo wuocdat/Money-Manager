@@ -68,4 +68,12 @@
     <string name="lack_of_info">Please check the information again!</string>
     <string name="created_exp_successfully">Successfully created new expense!</string>
     <string name="date_format_invalid">Date format invalid</string>
+    <string name="category_selection_item" translatable="false">Category item</string>
+    <string name="range_date_picker_calendar">Select a date range from the calendar</string>
+    <string name="filtered_expense_list">List of spending results</string>
+    <string name="home_hidden" translatable="false">Home-hidden</string>
+    <string name="history_hidden" translatable="false">History-hidden</string>
+    <string name="expense_category_logo">category logo</string>
+    <string name="selected_category_icon">Selected category icon</string>
+    <string name="_20_apr_2023" translatable="false">20 Apr, 2023</string>
 </resources>

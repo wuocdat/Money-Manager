@@ -63,4 +63,8 @@
     <string name="lack_of_info">Vui lòng kiểm tra lại thông tin!</string>
     <string name="created_exp_successfully">Đã tạo thành công bản ghi mới!</string>
     <string name="date_format_invalid">Định dạng ngày tháng không đúng!</string>
+    <string name="range_date_picker_calendar">Chọn khoảng thời gian</string>
+    <string name="filtered_expense_list">Danh sách các lần chi tiêu</string>
+    <string name="expense_category_logo">Logo loại chi tiêu</string>
+    <string name="selected_category_icon">icon check</string>
 </resources>

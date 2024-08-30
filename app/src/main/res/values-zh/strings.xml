@@ -63,4 +63,8 @@
     <string name="lack_of_info">请再次核对信息！</string>
     <string name="created_exp_successfully">成功创建新费用！</string>
     <string name="date_format_invalid">日期格式无效</string>
+    <string name="range_date_picker_calendar">选择日期范围</string>
+    <string name="filtered_expense_list">支出清单结果</string>
+    <string name="expense_category_logo">类别徽标</string>
+    <string name="selected_category_icon">选定类别图标</string>
 </resources>
