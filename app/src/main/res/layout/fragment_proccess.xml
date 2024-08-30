@@ -25,7 +25,7 @@
         <Button
             android:id="@+id/proccess_month_btn"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/recommend_size"
             android:paddingLeft="4dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
@@ -40,14 +40,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text=":"
+            android:text="@string/two_dot"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/proccess_year_btn"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/recommend_size"
             android:paddingLeft="4dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"

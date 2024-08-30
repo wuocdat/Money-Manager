@@ -76,4 +76,5 @@
     <string name="expense_category_logo">category logo</string>
     <string name="selected_category_icon">Selected category icon</string>
     <string name="_20_apr_2023" translatable="false">20 Apr, 2023</string>
+    <string name="two_dot" translatable="false">:</string>
 </resources>

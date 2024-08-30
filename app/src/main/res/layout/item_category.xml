@@ -19,7 +19,7 @@
         <LinearLayout
             android:id="@+id/item_category_container"
             android:layout_width="140dp"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/recommend_size"
             android:contentDescription="@string/category_selection_item"
             android:background="@color/red200"
             android:gravity="center_vertical"
