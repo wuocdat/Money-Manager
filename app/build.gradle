@@ -11,14 +11,14 @@ android {
     }
 
     namespace 'com.wuocdat.roomdatabase'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.wuocdat.roomdatabase"
         minSdk 23
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        targetSdk 34
+        versionCode 4
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -84,7 +84,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //date range piker
-    implementation "com.andrewjapar.rangedatepicker:rangedatepicker:$rootProject.rangedatepicker"
+//    implementation "com.andrewjapar.rangedatepicker:rangedatepicker:$rootProject.rangedatepicker"
 
     //ads mod
     implementation 'com.google.android.gms:play-services-ads-lite:22.6.0'

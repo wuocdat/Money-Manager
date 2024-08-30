@@ -63,7 +63,7 @@
     <string name="enter_goal_title">Enter your monthly spending limit</string>
     <string name="goal_share_preference_key" translatable="false">goal_share_preference_key</string>
     <string name="next">Next</string>
-    <string name="about_mess" translatable="false">Version 1.0.0, released on January 1, 2024 by @wuocdat.\nPhone +84 817 717 845.</string>
+    <string name="about_mess" translatable="false">Version 1.0.4, released on August 25, 2024 by @wuocdat.\nPhone +84 817 717 845.\nEmail quocdatpadpqn@gmail.com</string>
     <string name="percent_text" translatable="false">%1$d%%</string>
     <string name="lack_of_info">Please check the information again!</string>
     <string name="created_exp_successfully">Successfully created new expense!</string>
