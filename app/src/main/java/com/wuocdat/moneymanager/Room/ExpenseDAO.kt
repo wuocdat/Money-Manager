@@ -53,7 +53,7 @@ interface ExpenseDAO {
 
     @Query(
         """
-        SELECT strftime('%m', datetime(createdTime/1000, 'unixepoch', 'localtime')) AS month, 
+        SELECT CAST(strftime('%m', datetime(createdTime/1000, 'unixepoch', 'localtime')) AS INTEGER) AS month, 
         strftime('%Y', datetime(createdTime/1000, 'unixepoch', 'localtime')) AS year, SUM(money) as totalAmount
         FROM expense_table
         WHERE strftime('%Y', datetime(createdTime/1000, 'unixepoch', 'localtime')) = :yearString

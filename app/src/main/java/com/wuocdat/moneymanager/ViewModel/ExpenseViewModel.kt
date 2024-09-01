@@ -72,8 +72,8 @@ class ExpenseViewModel(private val repository: ExpenseRepository) : ViewModel() 
 
     fun getExpensesOfXMonth(timeString: String): LiveData<List<Expense>> {
         setMonthAndYearString(timeString)
-        return Transformations.switchMap(_monthAndYearString) { timeString ->
-            repository.getExpensesOfXMonth(timeString)
+        return Transformations.switchMap(_monthAndYearString) { timeStr ->
+            repository.getExpensesOfXMonth(timeStr)
         }
     }
 
@@ -83,8 +83,8 @@ class ExpenseViewModel(private val repository: ExpenseRepository) : ViewModel() 
 
     fun getTotalAmountByMonthInSpecialYear(yearString: String): LiveData<List<TotalAmountByMonth>> {
         setYearString(yearString)
-        return Transformations.switchMap(_yearString) { yearString ->
-            repository.getTotalAmountByMonthInSpecialYear(yearString)
+        return Transformations.switchMap(_yearString) { yearStr ->
+            repository.getTotalAmountByMonthInSpecialYear(yearStr)
         }
     }
 
